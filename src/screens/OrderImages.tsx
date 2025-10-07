@@ -1,6 +1,6 @@
 import './../App.css'
 import { useState } from 'react';
-import PrimaryButton from '../Components/PrimaryButton';
+import PrimaryButton from '../components/PrimaryButton';
 import { useNavigate } from 'react-router-dom';
 
 interface AppProps {
@@ -78,7 +78,7 @@ function App({goToPreparedList, goToAddOrders}: AppProps) {
               </div>
 
               <p className="text-black text-base font-bold">
-                Uploaded Orders<span className="text-black/50 text-base font-normal">(2)</span>
+                Upload Orders<span className="text-black/50 text-base font-normal">(2)</span>
               </p>
             </div>
 

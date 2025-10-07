@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PrimaryButton from '../Components/PrimaryButton';
 
 const PreparedList = ({ goBackToOrderImages, goToAddOrders }) => {
-  const [selectedOrders, setSelectedOrders] = useState([]);
+  const [selectedOrders, setSelectedOrders] = useState<string[]>([]);
 
   // Sample orders data
   const orders = [
