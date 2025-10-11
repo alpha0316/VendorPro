@@ -11,7 +11,7 @@ function PrimaryButton({ title, onClick }) {
   );
 }
 
-function App({ goToOrderImages = () => {}, goToAddOrders = () => {}, goToCopyAndPaste = () => {} }) {
+function App({ goToOrderImages = () => {}, goToAddOrders = () => {}, goToCopyAndPaste = () => {}, goToTypeOrders = () => {}, goToPreparedList = () => {} }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => setIsModalOpen(true);
@@ -161,7 +161,7 @@ function App({ goToOrderImages = () => {}, goToAddOrders = () => {}, goToCopyAnd
               <section 
                 onClick={() => {
                   closeModal();
-                  goToAddOrders();
+                  goToTypeOrders();
                 }}
                 className='w-full bg-white p-4 rounded-2xl flex justify-start items-start gap-2.5 border border-black/10 hover:border-orange-400 transition-colors cursor-pointer'>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 16 16" fill="none">

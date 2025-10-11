@@ -6,6 +6,7 @@ import Profile from './screens/Profile';
 import OrderImages from './screens/OrderImages';
 import PreparedList from './screens/PreparedList';
 import CopyAndPaste from './screens/CopyAndPaste';
+import TypeOrders from './screens/TypeOrders';
 
 const App = () => {
   const [activeTab, setActiveTab] = useState('AddOrders');
@@ -18,6 +19,7 @@ const App = () => {
             goToOrderImages={() => setActiveTab('OrderImages')}
             goToPreparedList={() => setActiveTab('PreparedList')}
             goToCopyAndPaste={() => setActiveTab('CopyAndPaste')}
+            goToTypeOrders={() => setActiveTab('TypeOrders')}
           />
         );
 
@@ -34,6 +36,15 @@ const App = () => {
       case 'OrderImages':
       return (
           <OrderImages
+            goToPreparedList={() => setActiveTab('PreparedList')}
+            goBackToAddOrders={() => setActiveTab('AddOrders')}
+          
+          />
+      );
+
+        case 'TypeOrders':
+      return (
+          <TypeOrders
             goToPreparedList={() => setActiveTab('PreparedList')}
             goBackToAddOrders={() => setActiveTab('AddOrders')}
           
