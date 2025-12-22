@@ -1,62 +1,107 @@
 
 import './../App.css'
-import { useState } from 'react';
-
-import CustomTable from '../components/BusesTable';
-
-// import ErrorBoundary from './components/ErrorBoundary';
-// import { useNavigate } from 'react-router-dom';
 
 
 
 function App() {
 
-    // const navigate = useNavigate();
+  // const navigate = useNavigate();
 
 
   return (
     <>
-      <main className='flex flex-col'>
-          
+      <main className='flex flex-col items-center justify-center w-full '>
 
-          <section className='flex flex-col w-full '>
-              <nav className='flex items-center justify-space px-8 h-14 border-b border-black/10 w-full'>
-                <nav className='flex items-center px-2 py-1 gap-2 rounded w-full'>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="15" viewBox="0 0 14 15" fill="none">
-                        <path d="M13.1994 3.69986C13.1889 3.57998 13.1058 3.48198 13.0156 3.48198C12.9255 3.48198 12.8516 3.40761 12.8516 3.31792C12.8516 3.22823 12.7544 3.17092 12.6359 3.19105L11.9919 3.30042C11.8624 2.51598 11.6681 2.02555 11.375 1.73242C10.5 0.857422 3.5 0.857422 2.625 1.73242C2.33188 2.02555 2.13763 2.51555 2.00813 3.29998L1.36413 3.19061C1.246 3.17048 1.14844 3.2278 1.14844 3.31748C1.14844 3.40717 1.07406 3.48198 0.984376 3.48198C0.894688 3.48198 0.811126 3.58042 0.800626 3.69986L0.595001 5.91623C0.591813 5.94395 0.59459 5.97202 0.603148 5.99858C0.611706 6.02513 0.625845 6.04954 0.644617 6.07018C0.663389 6.09082 0.686358 6.1072 0.711984 6.11822C0.737609 6.12925 0.765297 6.13467 0.793188 6.13411H1.25781C1.37813 6.13411 1.48531 6.03611 1.49669 5.91623L1.66906 4.06473C1.67136 4.03677 1.67949 4.0096 1.69291 3.98496C1.70633 3.96032 1.72476 3.93876 1.747 3.92166C1.76925 3.90457 1.79483 3.89231 1.82209 3.88568C1.84935 3.87905 1.8777 3.8782 1.90531 3.88317L1.92894 3.88755C1.7535 5.4853 1.75 13.4859 1.75 13.4859C1.75 13.7282 1.81125 13.9234 1.88694 13.9234H3.00781C3.0835 13.9234 3.14475 13.7282 3.14475 13.4859V12.6581C5.17606 12.9644 8.82438 12.9644 10.8557 12.6581V13.485C10.8557 13.7269 10.9169 13.9225 10.9922 13.9225H12.1131C12.1883 13.9225 12.2496 13.7269 12.2496 13.485C12.2496 13.485 12.2461 5.48617 12.0711 3.88755L12.0947 3.88317C12.1223 3.8782 12.1507 3.87906 12.178 3.88572C12.2053 3.89237 12.2309 3.90467 12.2531 3.92181C12.2754 3.93896 12.2938 3.96057 12.3072 3.98526C12.3206 4.00995 12.3287 4.03717 12.3309 4.06517L12.5029 5.9158C12.5134 6.03611 12.621 6.13455 12.7413 6.13455H13.2059C13.2339 6.13497 13.2616 6.12943 13.2872 6.11831C13.3129 6.10719 13.3359 6.09073 13.3547 6.07004C13.3735 6.04935 13.3876 6.02489 13.3962 5.99829C13.4048 5.9717 13.4077 5.94358 13.4046 5.9158L13.1989 3.69942L13.1994 3.69986ZM3.11763 10.7244C3.01142 10.7279 2.90558 10.7101 2.8064 10.672C2.70723 10.6338 2.61673 10.5761 2.54032 10.5023C2.4639 10.4284 2.40311 10.34 2.36158 10.2422C2.32005 10.1444 2.29861 10.0392 2.29855 9.93294C2.29849 9.82667 2.31981 9.72148 2.36124 9.62363C2.40266 9.52577 2.46335 9.43725 2.53969 9.36332C2.61602 9.2894 2.70645 9.23159 2.80559 9.19333C2.90472 9.15507 3.01054 9.13714 3.11675 9.14061C3.32114 9.14882 3.51443 9.23576 3.65618 9.38323C3.79793 9.53071 3.87715 9.72729 3.87726 9.93185C3.87738 10.1364 3.79837 10.3331 3.65679 10.4807C3.5152 10.6283 3.322 10.7155 3.11763 10.7239V10.7244ZM2.20631 7.48992C2.25006 4.23711 2.40319 2.5733 2.93475 2.0413C3.14781 1.82867 4.58719 1.51323 7.00044 1.51323C9.41369 1.51323 10.8531 1.82823 11.0661 2.0413C11.5986 2.5733 11.7504 4.23755 11.7946 7.49036C11.2805 7.6973 9.64906 7.9388 7.00044 7.9388C4.35356 7.9388 2.72256 7.69817 2.20631 7.48992ZM10.0901 9.93205C10.0968 9.72635 10.1833 9.53135 10.3312 9.38822C10.4791 9.24508 10.6768 9.16504 10.8826 9.16498C11.0884 9.16492 11.2862 9.24486 11.4341 9.38791C11.5821 9.53096 11.6687 9.72592 11.6756 9.93161C11.6756 10.1419 11.592 10.3435 11.4434 10.4922C11.2947 10.6408 11.0931 10.7244 10.8828 10.7244C10.6726 10.7244 10.4709 10.6408 10.3223 10.4922C10.1736 10.3435 10.0901 10.1423 10.0901 9.93205Z" fill="black"/>
-                    </svg>
-                    <p className='text-black text-sm font-normal' >Buses</p>
-                  </nav>
+        <section className='flex flex-col w-full '>
+          <div className='flex items-center justify-between w-[1132px] mt-8 '>
+            <div
+              onClick={() => navigate('/AddOrders')}
+              className="justify-center items-center flex-row hidden sm:flex">
+              <img src="/logo.png" alt="Logo" className="h-5 w-3" />
+              <span className="text-red-600 text-lg font-bold p-0">B</span>
+              <span className="text-black/50 text-lg font-bold ">ites.</span>
+            </div>
 
+            <div className="h-6 px-1 py-2.5 bg-orange-400 rounded-[50px] inline-flex flex-col justify-center items-center gap-2.5">
+              <div className="text-center justify-start text-white text-xs">R 👩🏽‍🍳</div>
+            </div>
+          </div>
+        </section>
 
-                    <aside className='flex items-center gap-4 justify-center'>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
-                        <path d="M19.3399 14.99L18.3399 13.33C18.1299 12.96 17.9399 12.26 17.9399 11.85V9.32C17.9399 6.97 16.5599 4.94 14.5699 3.99C14.0499 3.07 13.0899 2.5 11.9899 2.5C10.8999 2.5 9.91994 3.09 9.39994 4.02C7.44994 4.99 6.09994 7 6.09994 9.32V11.85C6.09994 12.26 5.90994 12.96 5.69994 13.32L4.68994 14.99C4.28994 15.66 4.19994 16.4 4.44994 17.08C4.68994 17.75 5.25994 18.27 5.99994 18.52C7.93994 19.18 9.97994 19.5 12.0199 19.5C14.0599 19.5 16.0999 19.18 18.0399 18.53C18.7399 18.3 19.2799 17.77 19.5399 17.08C19.7999 16.39 19.7299 15.63 19.3399 14.99Z" fill="black" fill-opacity="0.5"/>
-                        <path d="M14.8301 20.51C14.4101 21.67 13.3001 22.5 12.0001 22.5C11.2101 22.5 10.4301 22.18 9.88005 21.61C9.56005 21.31 9.32005 20.91 9.18005 20.5C9.31005 20.52 9.44005 20.53 9.58005 20.55C9.81005 20.58 10.0501 20.61 10.2901 20.63C10.8601 20.68 11.4401 20.71 12.0201 20.71C12.5901 20.71 13.1601 20.68 13.7201 20.63C13.9301 20.61 14.1401 20.6 14.3401 20.57C14.5001 20.55 14.6601 20.53 14.8301 20.51Z" fill="black" fill-opacity="0.5"/>
-                      </svg>
-
-                      <div className='flex items-center gap-8'>
-                          <div className='flex items-center gap-2 '>
-                              <div className="w-6 h-6 p-1 bg-green-600 rounded-[40px] inline-flex flex-col justify-center items-center gap-2.5">
-                                  <div className="justify-center text-white text-xs font-bold">E</div>
-                              </div>
-                              <p className='text-black/80 text-xs'>Essandoh</p>
-                          </div>
-
-                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="17" viewBox="0 0 16 17" fill="none">
-                            <path d="M8 10.5C9.10457 10.5 10 9.60457 10 8.5C10 7.39543 9.10457 6.5 8 6.5C6.89543 6.5 6 7.39543 6 8.5C6 9.60457 6.89543 10.5 8 10.5Z" stroke="black" stroke-opacity="0.6" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M1.33337 9.08667V7.91333C1.33337 7.22 1.90004 6.64667 2.60004 6.64667C3.80671 6.64667 4.30004 5.79333 3.69337 4.74667C3.34671 4.14667 3.55337 3.36667 4.16004 3.02L5.31337 2.36C5.84004 2.04666 6.52004 2.23333 6.83337 2.76L6.90671 2.88666C7.50671 3.93333 8.49337 3.93333 9.10004 2.88666L9.17337 2.76C9.48671 2.23333 10.1667 2.04666 10.6934 2.36L11.8467 3.02C12.4534 3.36667 12.66 4.14667 12.3134 4.74667C11.7067 5.79333 12.2 6.64667 13.4067 6.64667C14.1 6.64667 14.6734 7.21333 14.6734 7.91333V9.08667C14.6734 9.78 14.1067 10.3533 13.4067 10.3533C12.2 10.3533 11.7067 11.2067 12.3134 12.2533C12.66 12.86 12.4534 13.6333 11.8467 13.98L10.6934 14.64C10.1667 14.9533 9.48671 14.7667 9.17337 14.24L9.10004 14.1133C8.50004 13.0667 7.51337 13.0667 6.90671 14.1133L6.83337 14.24C6.52004 14.7667 5.84004 14.9533 5.31337 14.64L4.16004 13.98C3.55337 13.6333 3.34671 12.8533 3.69337 12.2533C4.30004 11.2067 3.80671 10.3533 2.60004 10.3533C1.90004 10.3533 1.33337 9.78 1.33337 9.08667Z" stroke="black" stroke-opacity="0.6" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-                          </svg>
-                          
-                      </div>
-              </aside>
-              </nav>
+        <main className='w-100 flex flex-col items-start justify-center  gap-3'>
+          <nav className='w-full flex items-center justify-between'>
+            <p className='text-black text-base text-left font-bold flex items-start justify-start'>Your Riders</p>
+            <div className="inline-flex justify-start items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M4 8H12" stroke="green" stroke-opacity="0.6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M8 12V4" stroke="green" stroke-opacity="0.6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              <div className="justify-start text-green-600 text-xs font-semibold ">Add Driver</div>
+            </div>
+          </nav>
 
 
-            
-          </section>
+          <main className='w-full flex flex-col gap-3 p-4 bg-neutral-50 rounded-2xl'>
+            <div className='w-full items-start justify-between flex'>
+              <figure className='w-14 h-14 bg-neutral-100 rounded-full flex flex-col items-center justify-center gap-2'>
 
-          <CustomTable/>
+              </figure>
+
+              <div className="w-9 h-9 p-2.5 bg-neutral-50 rounded-3xl inline-flex justify-center items-center gap-2.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M14.0471 3.48668C12.9738 3.38001 11.9004 3.30001 10.8204 3.24001V3.23334L10.6738 2.36668C10.5738 1.75334 10.4271 0.833344 8.8671 0.833344H7.12043C5.5671 0.833344 5.42043 1.71334 5.31376 2.36001L5.17376 3.21334C4.55376 3.25334 3.93376 3.29334 3.31376 3.35334L1.95376 3.48668C1.67376 3.51334 1.47376 3.76001 1.50043 4.03334C1.5271 4.30668 1.7671 4.50668 2.0471 4.48001L3.4071 4.34668C6.90043 4.00001 10.4204 4.13334 13.9538 4.48668C13.9738 4.48668 13.9871 4.48668 14.0071 4.48668C14.2604 4.48668 14.4804 4.29334 14.5071 4.03334C14.5271 3.76001 14.3271 3.51334 14.0471 3.48668Z" fill="black" fill-opacity="0.5" />
+                  <path d="M12.8202 5.42666C12.6602 5.25999 12.4402 5.16666 12.2135 5.16666H3.78683C3.56016 5.16666 3.33349 5.25999 3.18016 5.42666C3.02683 5.59332 2.94016 5.81999 2.95349 6.05332L3.36683 12.8933C3.44016 13.9067 3.53349 15.1733 5.86016 15.1733H10.1402C12.4668 15.1733 12.5602 13.9133 12.6335 12.8933L13.0468 6.05999C13.0602 5.81999 12.9735 5.59332 12.8202 5.42666ZM9.10683 11.8333H6.88683C6.61349 11.8333 6.38683 11.6067 6.38683 11.3333C6.38683 11.06 6.61349 10.8333 6.88683 10.8333H9.10683C9.38016 10.8333 9.60683 11.06 9.60683 11.3333C9.60683 11.6067 9.38016 11.8333 9.10683 11.8333ZM9.66683 9.16666H6.33349C6.06016 9.16666 5.83349 8.93999 5.83349 8.66666C5.83349 8.39332 6.06016 8.16666 6.33349 8.16666H9.66683C9.94016 8.16666 10.1668 8.39332 10.1668 8.66666C10.1668 8.93999 9.94016 9.16666 9.66683 9.16666Z" fill="black" fill-opacity="0.5" />
+                </svg>
+              </div>
+
+            </div>
+
+            <section className='w-full flex gap-2 items-center justify-start'>
+              <p className='text-black text-base font-semibold'>John Doe</p>
+              <div className='w-1 h-1 rounded-full bg-neutral-200' />
+              <p className='text-black/50 text-sm '>08123456789</p>
+            </section>
+
+            <section className='w-full flex gap-2 items-center justify-start'>
+              <p className='text-black text-xs font-semibold'>24 <span className='text-black/50 font-normal'>Total Rides</span> </p>
+              <div className='w-1 h-1 rounded-full bg-neutral-200' />
+              <p className='text-black text-xs font-semibold'>26/12/25<span className='text-black/50 font-normal'> Date Added</span> </p>
+              <div className='w-1 h-1 rounded-full bg-neutral-200' />
+              <p className='text-black text-xs font-semibold'>4.6<span className='text-black/50 font-normal'> Rating</span> </p>
+            </section>
+          </main>
+
+          <main className='w-full flex flex-col gap-3 p-4 bg-neutral-50 rounded-2xl'>
+            <div className='w-full items-start justify-between flex'>
+              <figure className='w-14 h-14 bg-neutral-100 rounded-full flex flex-col items-center justify-center gap-2'>
+
+              </figure>
+
+
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M14.0471 3.48668C12.9738 3.38001 11.9004 3.30001 10.8204 3.24001V3.23334L10.6738 2.36668C10.5738 1.75334 10.4271 0.833344 8.8671 0.833344H7.12043C5.5671 0.833344 5.42043 1.71334 5.31376 2.36001L5.17376 3.21334C4.55376 3.25334 3.93376 3.29334 3.31376 3.35334L1.95376 3.48668C1.67376 3.51334 1.47376 3.76001 1.50043 4.03334C1.5271 4.30668 1.7671 4.50668 2.0471 4.48001L3.4071 4.34668C6.90043 4.00001 10.4204 4.13334 13.9538 4.48668C13.9738 4.48668 13.9871 4.48668 14.0071 4.48668C14.2604 4.48668 14.4804 4.29334 14.5071 4.03334C14.5271 3.76001 14.3271 3.51334 14.0471 3.48668Z" fill="black" fill-opacity="0.5" />
+                <path d="M12.8202 5.42666C12.6602 5.25999 12.4402 5.16666 12.2135 5.16666H3.78683C3.56016 5.16666 3.33349 5.25999 3.18016 5.42666C3.02683 5.59332 2.94016 5.81999 2.95349 6.05332L3.36683 12.8933C3.44016 13.9067 3.53349 15.1733 5.86016 15.1733H10.1402C12.4668 15.1733 12.5602 13.9133 12.6335 12.8933L13.0468 6.05999C13.0602 5.81999 12.9735 5.59332 12.8202 5.42666ZM9.10683 11.8333H6.88683C6.61349 11.8333 6.38683 11.6067 6.38683 11.3333C6.38683 11.06 6.61349 10.8333 6.88683 10.8333H9.10683C9.38016 10.8333 9.60683 11.06 9.60683 11.3333C9.60683 11.6067 9.38016 11.8333 9.10683 11.8333ZM9.66683 9.16666H6.33349C6.06016 9.16666 5.83349 8.93999 5.83349 8.66666C5.83349 8.39332 6.06016 8.16666 6.33349 8.16666H9.66683C9.94016 8.16666 10.1668 8.39332 10.1668 8.66666C10.1668 8.93999 9.94016 9.16666 9.66683 9.16666Z" fill="black" fill-opacity="0.5" />
+              </svg>
+
+
+            </div>
+
+            <section className='w-full flex gap-2 items-center justify-start'>
+              <p className='text-black text-base font-semibold'>John Doe</p>
+              <div className='w-1 h-1 rounded-full bg-neutral-200' />
+              <p className='text-black/50 text-sm '>08123456789</p>
+            </section>
+
+            <section className='w-full flex gap-2 items-center justify-start'>
+              <p className='text-black text-xs font-semibold'>24 <span className='text-black/50 font-normal'>Total Rides</span> </p>
+              <div className='w-1 h-1 rounded-full bg-neutral-200' />
+              <p className='text-black text-xs font-semibold'>26/12/25<span className='text-black/50 font-normal'> Date Added</span> </p>
+              <div className='w-1 h-1 rounded-full bg-neutral-200' />
+              <p className='text-black text-xs font-semibold'>4.6<span className='text-black/50 font-normal'> Rating</span> </p>
+            </section>
+          </main>
+
+        </main>
 
       </main>
     </>
