@@ -263,11 +263,11 @@ function App() {
         </section>
 
         <section className='flex flex-col w-full items-center justify-center gap-4 '>
-          <p className="text-black text-base text-left font-bold flex items-start justify-start w-100">
+          <p className="text-black text-base text-left font-bold flex items-start justify-start w-140">
             {getMainTitle()} <span className="text-black/50 text-base font-normal ">({getOrderCount()})</span>
           </p>
 
-          <div className="w-100 px-3 py-2 rounded-xl  outline-[0.50px] outline-offset-[-0.50px] outline-black/40 inline-flex justify-between items-center">
+          <div className="w-140 px-3 py-2 rounded-xl  outline-[0.50px] outline-offset-[-0.50px] outline-black/40 inline-flex justify-between items-center">
             <div className='flex items-center gap-2'>
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
                 <path d="M13.3542 13.86C13.6609 14.1667 14.1342 13.6934 13.8276 13.3934L11.3276 10.8867C12.2045 9.91638 12.6893 8.6546 12.6876 7.34671C12.6876 4.42004 10.3076 2.04004 7.38089 2.04004C4.45422 2.04004 2.07422 4.42004 2.07422 7.34671C2.07422 10.2734 4.45422 12.6534 7.38089 12.6534C8.70089 12.6534 9.92089 12.1667 10.8542 11.36L13.3542 13.86ZM2.74022 7.34671C2.74022 4.78671 4.82688 2.70671 7.38022 2.70671C9.94022 2.70671 12.0202 4.78671 12.0202 7.34671C12.0202 9.90671 9.94022 11.9867 7.38022 11.9867C4.82688 11.9867 2.74022 9.90671 2.74022 7.34671Z" fill="black" fillOpacity="0.6" />
@@ -280,12 +280,14 @@ function App() {
             </div>
           </div>
 
-          <main className='flex  w-100 flex-col items-start justify-center gap-3'>
+          <main className='flex  w-140 flex-col items-start justify-center gap-3'>
             <nav className='flex w-full'>
               <p className='text-green-600 text-sm pb-1 border-b-2 border-b-green-400 w-full'>Pending</p>
               <p className='text-black/50 text-sm pb-1 w-full  border-b-1 border-b-black/10'>Packaged</p>
               <p className='text-black/50 text-sm pb-1 w-full  border-b-1 border-b-black/10'>In Transit</p>
               <p className='text-black/50 text-sm pb-1 w-full  border-b-1 border-b-black/10'>Completed</p>
+              <p className='text-black/50 text-sm pb-1 w-full  border-b-1 border-b-black/10'>Pickup</p>
+              <p className='text-black/50 text-sm pb-1 w-full  border-b-1 border-b-black/10'>Refund</p>
             </nav>
 
             {/* Date Filters with animation */}
@@ -293,12 +295,12 @@ function App() {
               className={`transition-all duration-300 ease-in-out overflow-hidden ${showDateFilters ? 'max-h-20 opacity-100' : 'max-h-0 opacity-0'
                 }`}
             >
-              <nav className='flex w-96 items-start justify-start gap-2 py-1 px-1'>
+              <nav className='flex w-140 items-start justify-start gap-2 py-1 px-1'>
                 <div
                   onClick={() => handleDateFilterClick('Today')}
                   className={`px-2.5 py-1 rounded-3xl outline outline-offset-[-0.50px] inline-flex justify-center items-center gap-2.5 cursor-pointer transition-all duration-200 ${selectedDateFilter === 'Today'
-                      ? 'bg-orange-400/5 outline-orange-400'
-                      : 'bg-neutral-50 outline-transparent hover:bg-neutral-100'
+                    ? 'bg-orange-400/5 outline-orange-400'
+                    : 'bg-neutral-50 outline-transparent hover:bg-neutral-100'
                     }`}
                 >
                   <div className={`text-center justify-center text-sm ${selectedDateFilter === 'Today' ? 'text-orange-400' : 'text-black/50'
@@ -308,8 +310,8 @@ function App() {
                 <div
                   onClick={() => handleDateFilterClick('Yesterday')}
                   className={`px-2.5 py-1 rounded-3xl outline outline-offset-[-0.50px] inline-flex justify-center items-center gap-2.5 cursor-pointer transition-all duration-200 ${selectedDateFilter === 'Yesterday'
-                      ? 'bg-orange-400/5 outline-orange-400'
-                      : 'bg-neutral-50 outline-transparent hover:bg-neutral-100'
+                    ? 'bg-orange-400/5 outline-orange-400'
+                    : 'bg-neutral-50 outline-transparent hover:bg-neutral-100'
                     }`}
                 >
                   <p className={`text-center justify-center text-sm ${selectedDateFilter === 'Yesterday' ? 'text-orange-400 font-medium' : 'text-black/50 font-normal'
@@ -319,8 +321,8 @@ function App() {
                 <div
                   onClick={() => handleDateFilterClick('Last Week')}
                   className={`px-2.5 py-1 rounded-3xl outline outline-offset-[-0.50px] inline-flex justify-center items-center gap-2.5 cursor-pointer transition-all duration-200 ${selectedDateFilter === 'Last Week'
-                      ? 'bg-orange-400/5 outline-orange-400'
-                      : 'bg-neutral-50 outline-transparent hover:bg-neutral-100'
+                    ? 'bg-orange-400/5 outline-orange-400'
+                    : 'bg-neutral-50 outline-transparent hover:bg-neutral-100'
                     }`}
                 >
                   <p className={`text-center justify-center text-sm ${selectedDateFilter === 'Last Week' ? 'text-orange-400 font-medium' : 'text-black/50 font-normal'
@@ -330,8 +332,8 @@ function App() {
                 <div
                   onClick={() => handleDateFilterClick('Past Orders')}
                   className={`px-2.5 py-1 rounded-3xl outline outline-offset-[-0.50px] inline-flex justify-center items-center gap-2.5 cursor-pointer transition-all duration-200 ${selectedDateFilter === 'Past Orders'
-                      ? 'bg-orange-400/5 outline-orange-400'
-                      : 'bg-neutral-50 outline-transparent hover:bg-neutral-100'
+                    ? 'bg-orange-400/5 outline-orange-400'
+                    : 'bg-neutral-50 outline-transparent hover:bg-neutral-100'
                     }`}
                 >
                   <p className={`text-center justify-center text-sm ${selectedDateFilter === 'Past Orders' ? 'text-orange-400 font-medium' : 'text-black/50 font-normal'
@@ -341,7 +343,7 @@ function App() {
             </div>
 
             {showStatusAction && (
-              <aside className='flex w-96 items-start justify-start gap-4 transition-all duration-300 ease-in-out'>
+              <aside className='flex w-140 items-start justify-start gap-4 transition-all duration-300 ease-in-out'>
                 <div className="p-1 bg-neutral-50 rounded-3xl inline-flex justify-start items-start gap-2 cursor-pointer hover:bg-neutral-100 transition-colors duration-200">
                   <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
                     <path d="M10.2666 3.09751L6.97078 1.32417C6.62078 1.13751 6.20661 1.13751 5.85661 1.32417L2.56661 3.09751C2.32745 3.23167 2.17578 3.48834 2.17578 3.76834C2.17578 4.05417 2.32161 4.31084 2.56661 4.43917L5.86245 6.21251C6.03745 6.30584 6.22995 6.35251 6.41661 6.35251C6.60328 6.35251 6.80161 6.30584 6.97078 6.21251L10.2666 4.43917C10.5058 4.31084 10.6574 4.05417 10.6574 3.76834C10.6574 3.48834 10.5058 3.23167 10.2666 3.09751Z" fill="black" />
@@ -473,6 +475,20 @@ function App() {
                     <path d="M12.577 6.265L11.7837 5.34333C11.632 5.16833 11.5095 4.84167 11.5095 4.60833V3.61667C11.5095 2.99833 11.002 2.49083 10.3837 2.49083H9.39201C9.16451 2.49083 8.832 2.36833 8.657 2.21667L7.73534 1.42333C7.33284 1.07917 6.67367 1.07917 6.26534 1.42333L5.34951 2.2225C5.17451 2.36833 4.842 2.49083 4.6145 2.49083H3.60534C2.98701 2.49083 2.47951 2.99833 2.47951 3.61667V4.61417C2.47951 4.84167 2.35701 5.16833 2.21117 5.34333L1.42367 6.27083C1.08534 6.67333 1.08534 7.32666 1.42367 7.72916L2.21117 8.65666C2.35701 8.83166 2.47951 9.15833 2.47951 9.38583V10.3833C2.47951 11.0017 2.98701 11.5092 3.60534 11.5092H4.6145C4.842 11.5092 5.17451 11.6317 5.34951 11.7833L6.27117 12.5767C6.67367 12.9208 7.33284 12.9208 7.74117 12.5767L8.66284 11.7833C8.83784 11.6317 9.16451 11.5092 9.39784 11.5092H10.3895C11.0078 11.5092 11.5153 11.0017 11.5153 10.3833V9.39166C11.5153 9.16416 11.6378 8.83166 11.7895 8.65666L12.5828 7.735C12.9212 7.3325 12.9212 6.6675 12.577 6.265ZM9.427 5.8975L6.6095 8.715C6.52784 8.79666 6.41701 8.84333 6.30034 8.84333C6.18367 8.84333 6.07284 8.79666 5.99117 8.715L4.5795 7.30333C4.41034 7.13417 4.41034 6.85416 4.5795 6.685C4.74867 6.51583 5.02867 6.51583 5.19784 6.685L6.30034 7.7875L8.80867 5.27917C8.97784 5.11 9.25784 5.11 9.427 5.27917C9.59617 5.44833 9.59617 5.72833 9.427 5.8975Z" fill="#4DB448" />
                   </svg>
                   <div className="justify-start text-green-500 text-xs font-medium ">Completed</div>
+                </div>
+
+                 <div className="p-1 bg-neutral-50 rounded-3xl inline-flex justify-start items-start gap-2 cursor-pointer hover:bg-neutral-100 transition-colors duration-200">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                    <path d="M12.577 6.265L11.7837 5.34333C11.632 5.16833 11.5095 4.84167 11.5095 4.60833V3.61667C11.5095 2.99833 11.002 2.49083 10.3837 2.49083H9.39201C9.16451 2.49083 8.832 2.36833 8.657 2.21667L7.73534 1.42333C7.33284 1.07917 6.67367 1.07917 6.26534 1.42333L5.34951 2.2225C5.17451 2.36833 4.842 2.49083 4.6145 2.49083H3.60534C2.98701 2.49083 2.47951 2.99833 2.47951 3.61667V4.61417C2.47951 4.84167 2.35701 5.16833 2.21117 5.34333L1.42367 6.27083C1.08534 6.67333 1.08534 7.32666 1.42367 7.72916L2.21117 8.65666C2.35701 8.83166 2.47951 9.15833 2.47951 9.38583V10.3833C2.47951 11.0017 2.98701 11.5092 3.60534 11.5092H4.6145C4.842 11.5092 5.17451 11.6317 5.34951 11.7833L6.27117 12.5767C6.67367 12.9208 7.33284 12.9208 7.74117 12.5767L8.66284 11.7833C8.83784 11.6317 9.16451 11.5092 9.39784 11.5092H10.3895C11.0078 11.5092 11.5153 11.0017 11.5153 10.3833V9.39166C11.5153 9.16416 11.6378 8.83166 11.7895 8.65666L12.5828 7.735C12.9212 7.3325 12.9212 6.6675 12.577 6.265ZM9.427 5.8975L6.6095 8.715C6.52784 8.79666 6.41701 8.84333 6.30034 8.84333C6.18367 8.84333 6.07284 8.79666 5.99117 8.715L4.5795 7.30333C4.41034 7.13417 4.41034 6.85416 4.5795 6.685C4.74867 6.51583 5.02867 6.51583 5.19784 6.685L6.30034 7.7875L8.80867 5.27917C8.97784 5.11 9.25784 5.11 9.427 5.27917C9.59617 5.44833 9.59617 5.72833 9.427 5.8975Z" fill="#4DB448" />
+                  </svg>
+                  <div className="justify-start text-purple-500 text-xs font-medium ">Pick Up</div>
+                </div>
+
+                 <div className="p-1 bg-neutral-50 rounded-3xl inline-flex justify-start items-start gap-2 cursor-pointer hover:bg-neutral-100 transition-colors duration-200">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                    <path d="M12.577 6.265L11.7837 5.34333C11.632 5.16833 11.5095 4.84167 11.5095 4.60833V3.61667C11.5095 2.99833 11.002 2.49083 10.3837 2.49083H9.39201C9.16451 2.49083 8.832 2.36833 8.657 2.21667L7.73534 1.42333C7.33284 1.07917 6.67367 1.07917 6.26534 1.42333L5.34951 2.2225C5.17451 2.36833 4.842 2.49083 4.6145 2.49083H3.60534C2.98701 2.49083 2.47951 2.99833 2.47951 3.61667V4.61417C2.47951 4.84167 2.35701 5.16833 2.21117 5.34333L1.42367 6.27083C1.08534 6.67333 1.08534 7.32666 1.42367 7.72916L2.21117 8.65666C2.35701 8.83166 2.47951 9.15833 2.47951 9.38583V10.3833C2.47951 11.0017 2.98701 11.5092 3.60534 11.5092H4.6145C4.842 11.5092 5.17451 11.6317 5.34951 11.7833L6.27117 12.5767C6.67367 12.9208 7.33284 12.9208 7.74117 12.5767L8.66284 11.7833C8.83784 11.6317 9.16451 11.5092 9.39784 11.5092H10.3895C11.0078 11.5092 11.5153 11.0017 11.5153 10.3833V9.39166C11.5153 9.16416 11.6378 8.83166 11.7895 8.65666L12.5828 7.735C12.9212 7.3325 12.9212 6.6675 12.577 6.265ZM9.427 5.8975L6.6095 8.715C6.52784 8.79666 6.41701 8.84333 6.30034 8.84333C6.18367 8.84333 6.07284 8.79666 5.99117 8.715L4.5795 7.30333C4.41034 7.13417 4.41034 6.85416 4.5795 6.685C4.74867 6.51583 5.02867 6.51583 5.19784 6.685L6.30034 7.7875L8.80867 5.27917C8.97784 5.11 9.25784 5.11 9.427 5.27917C9.59617 5.44833 9.59617 5.72833 9.427 5.8975Z" fill="#4DB448" />
+                  </svg>
+                  <div className="justify-start text-red-500 text-xs font-medium ">Refund</div>
                 </div>
               </aside>
             )}

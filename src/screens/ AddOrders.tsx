@@ -1,6 +1,11 @@
 import { useState } from 'react';
 
-function PrimaryButton({ title, onClick }) {
+type PrimaryButtonProps = {
+  title: string;
+  onClick: () => void;
+};
+
+function PrimaryButton({ title, onClick }: PrimaryButtonProps) {
   return (
     <button 
       onClick={onClick}
@@ -11,7 +16,7 @@ function PrimaryButton({ title, onClick }) {
   );
 }
 
-function App({ goToOrderImages = () => {}, goToAddOrders = () => {}, goToCopyAndPaste = () => {}, goToTypeOrders = () => {}, goToPreparedList = () => {} }) {
+function App({ goToOrderImages = () => {}, goToAddOrders = () => {}, goToCopyAndPaste = () => {}, goToTypeOrders = () => {} }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => setIsModalOpen(true);
@@ -42,7 +47,7 @@ function App({ goToOrderImages = () => {}, goToAddOrders = () => {}, goToCopyAnd
                         <div className="w-24 left-[-17.12px] top-[10.20px] absolute text-center justify-start text-black text-5xl font-bold">🧕🏽</div>
                     </div>
 
-                    <p className="self-stretch text-center justify-start text-black text-sm font-bold">Suad M.🧕🏽</p>
+                    <p className="self-stretch text-center justify-start text-black text-sm font-bold">Rashida M.🧕🏽</p>
 
                     <div className="self-stretch inline-flex justify-center items-center gap-2.5">
                         <div className="flex justify-start items-center gap-0.5">
@@ -110,7 +115,7 @@ function App({ goToOrderImages = () => {}, goToAddOrders = () => {}, goToCopyAnd
 
             <section className='flex flex-col items-center justify-center gap-6'>
                 <div className="w-60 inline-flex flex-col justify-start items-center gap-1.5">
-                    <p className="self-stretch text-center justify-start text-black text-3xl font-medium ">Hiii Rashida ✨👩🏽‍🍳</p>
+                    <p className="self-stretch text-center justify-start text-black text-3xl font-medium ">Hiii Akosuaa ✨👩🏽‍🍳</p>
                     <p className="self-stretch text-center justify-start text-black/50 text-xs font-medium">You have not uploaded any order for this week yet 💁🏽‍♀️</p>
                 </div>
 

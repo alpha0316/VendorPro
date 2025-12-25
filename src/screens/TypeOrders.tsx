@@ -2,7 +2,6 @@ import './../App.css'
 import { useState } from 'react';
 import PrimaryButton from '../components/PrimaryButton';
 import { useNavigate } from 'react-router-dom';
-import RiderModal from '../components/SelectRider';
 
 interface AppProps {
   goToPreparedList: () => void;
@@ -17,6 +16,128 @@ interface Order {
   item: string;
   price: string;
 }
+
+interface Rider {
+  id: string;
+  name: string;
+  phone: string;
+  totalRides: number;
+  dateAdded: string;
+  rating: number;
+  avatarColor?: string;
+}
+
+/* ---------------- RIDER MODAL COMPONENT ---------------- */
+const RiderModal: React.FC<{
+  isOpen: boolean;
+  onClose: () => void;
+  onAssign: (riderId: string) => void;
+  riders: Rider[];
+  selectedRider: string | null;
+  onSelectRider: (riderId: string) => void;
+}> = ({ isOpen, onClose, onAssign, riders, selectedRider, onSelectRider }) => {
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+      <div className="bg-white rounded-2xl w-full max-w-md">
+        {/* Modal Header */}
+        <div className="p-4 border-b border-neutral-200 flex flex-col items-start">
+          <h3 className="text-black text-lg font-semibold">Select Rider</h3>
+          <p className="text-black/50 text-sm mt-1">Choose a rider to assign this order to</p>
+        </div>
+
+        {/* Modal Body */}
+        <div className="p-4 max-h-[60vh] overflow-y-auto">
+          <div className="flex flex-col gap-4">
+            {riders.map((rider) => (
+              <div
+                key={rider.id}
+                className={`w-full flex flex-col gap-3 p-4 rounded-2xl cursor-pointer transition-all duration-200 ${
+                  selectedRider === rider.id
+                    ? 'border-orange-400 border-[0.5px] bg-orange-400/5'
+                    : 'border border-neutral-200 hover:bg-neutral-50'
+                }`}
+                onClick={() => onSelectRider(rider.id)}
+              >
+                <div className='w-full items-start justify-between flex'>
+                  <figure className={`w-14 h-14 ${rider.avatarColor || 'bg-blue-100'} rounded-full flex flex-col items-center justify-center gap-2`}>
+                    <span className="text-black font-semibold">
+                      {rider.name.split(' ').map(n => n[0]).join('')}
+                    </span>
+                  </figure>
+
+                  {/* Radio Button */}
+                  <div 
+                    className={`w-6 h-6 rounded-full border flex items-center justify-center cursor-pointer ${
+                      selectedRider === rider.id
+                        ? 'border-orange-400 bg-orange-400'
+                        : 'border-neutral-300 bg-white'
+                    }`}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onSelectRider(rider.id);
+                    }}
+                  >
+                    {selectedRider === rider.id && (
+                      <div className="w-2.5 h-2.5 rounded-full bg-white" />
+                    )}
+                  </div>
+                </div>
+
+                <section className='w-full flex gap-2 items-center justify-start'>
+                  <p className='text-black text-base font-semibold'>{rider.name}</p>
+                  <div className='w-1 h-1 rounded-full bg-neutral-200' />
+                  <p className='text-black/50 text-sm '>{rider.phone}</p>
+                </section>
+
+                <section className='w-full flex gap-2 items-center justify-start'>
+                  <p className='text-black text-xs font-semibold'>
+                    {rider.totalRides} <span className='text-black/50 font-normal'>Total Rides</span>
+                  </p>
+                  <div className='w-1 h-1 rounded-full bg-neutral-200' />
+                  <p className='text-black text-xs font-semibold'>
+                    {rider.dateAdded}<span className='text-black/50 font-normal'> Date Added</span>
+                  </p>
+                  <div className='w-1 h-1 rounded-full bg-neutral-200' />
+                  <p className='text-black text-xs font-semibold'>
+                    {rider.rating.toFixed(1)}<span className='text-black/50 font-normal'> Rating</span>
+                  </p>
+                </section>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Modal Footer */}
+        <div className="p-4 border-t border-neutral-200 flex gap-3  justify-between items-center">
+          <button
+            onClick={onClose}
+            className=" px-3 py-2 rounded-full border border-neutral-300 text-black font-medium hover:bg-neutral-50 transition-colors duration-200"
+          >
+            Cancel
+          </button>
+          <button
+            onClick={() => {
+              if (selectedRider) {
+                onAssign(selectedRider);
+                onClose();
+              }
+            }}
+            disabled={!selectedRider}
+            className={`px-3 py-2 rounded-full font-medium transition-colors duration-200 ${
+              selectedRider
+                ? 'bg-orange-400 text-white hover:bg-orange-500'
+                : 'bg-neutral-200 text-neutral-400 cursor-not-allowed'
+            }`}
+          >
+            Assign
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 /* ---------------- CHECK ICON COMPONENT ---------------- */
 const CheckCircleIcon = ({
@@ -99,13 +220,46 @@ const OrderItem: React.FC<{
   );
 };
 
-function App({ goToPreparedList, goToAddOrders }: AppProps) {
+function App({ goToAddOrders }: AppProps) {
   const navigate = useNavigate();
 
   const [selectedOrders, setSelectedOrders] = useState<string[]>([]);
   const [orders, setOrders] = useState<Order[]>([
     { id: '#011', name: 'Prince', phone: '055 414 4611', hall: 'Suncity', item: 'Jollof', price: 'GHC 60' },
     { id: '#014', name: 'Kofi Asante', phone: '055 321 7654', hall: 'Hall 2', item: 'Banku', price: 'GHC 40' },
+  ]);
+
+  // Modal state
+  const [isRiderModalOpen, setIsRiderModalOpen] = useState(false);
+  const [selectedRider, setSelectedRider] = useState<string | null>(null);
+  const [riders] = useState<Rider[]>([
+    {
+      id: '1',
+      name: 'John Doe',
+      phone: '08123456789',
+      totalRides: 24,
+      dateAdded: '26/12/25',
+      rating: 4.6,
+      avatarColor: 'bg-blue-100',
+    },
+    {
+      id: '2',
+      name: 'Jane Smith',
+      phone: '08098765432',
+      totalRides: 18,
+      dateAdded: '15/12/25',
+      rating: 4.8,
+      avatarColor: 'bg-green-100',
+    },
+    {
+      id: '3',
+      name: 'Mike Johnson',
+      phone: '07012345678',
+      totalRides: 32,
+      dateAdded: '10/12/25',
+      rating: 4.4,
+      avatarColor: 'bg-purple-100',
+    },
   ]);
 
   // Form state
@@ -175,21 +329,36 @@ function App({ goToPreparedList, goToAddOrders }: AppProps) {
     });
   };
 
-  // Handle assign to riders
+  // Handle assign to riders - opens the modal
   const handleAssignToRiders = () => {
     if (selectedOrders.length === 0) {
       alert('Please select at least one order to assign');
       return;
     }
     
+    // Reset selected rider and open modal
+    setSelectedRider(null);
+    setIsRiderModalOpen(true);
+  };
+
+  // Handle actual assignment after selecting a rider
+  const handleAssignOrder = (riderId: string) => {
+    const selectedRiderDetails = riders.find(rider => rider.id === riderId);
     const selectedOrderDetails = orders.filter(order => selectedOrders.includes(order.id));
-    console.log('Assigning orders:', selectedOrderDetails);
-    alert(`Assigning ${selectedOrders.length} order(s) to riders`);
+    
+    console.log(`Assigning ${selectedOrders.length} order(s) to rider:`, selectedRiderDetails);
+    console.log('Orders being assigned:', selectedOrderDetails);
+    
+    // Show success message
+    alert(`Successfully assigned ${selectedOrders.length} order(s) to ${selectedRiderDetails?.name}`);
     
     // Here you would typically:
-    // 1. Open rider selection modal
-    // 2. Make API call to assign orders
-    // 3. Update order status
+    // 1. Make API call to assign orders to rider
+    // 2. Update order status in your backend
+    // 3. Maybe remove assigned orders from the list or mark them as assigned
+    
+    // For now, just clear selection
+    setSelectedOrders([]);
   };
 
   // Handle save orders
@@ -461,6 +630,19 @@ function App({ goToPreparedList, goToAddOrders }: AppProps) {
           )}
         </section>
       </main>
+
+      {/* Rider Modal with Overlay using card design */}
+      <RiderModal
+        isOpen={isRiderModalOpen}
+        onClose={() => {
+          setIsRiderModalOpen(false);
+          setSelectedRider(null);
+        }}
+        onAssign={handleAssignOrder}
+        riders={riders}
+        selectedRider={selectedRider}
+        onSelectRider={setSelectedRider}
+      />
     </>
   );
 }

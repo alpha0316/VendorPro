@@ -25,9 +25,7 @@ const RiderModal: React.FC<RiderModalProps> = ({
   isOpen,
   onClose,
   onAssign,
-  riders,
   selectedRider,
-  onSelectRider,
 }) => {
   if (!isOpen) return null;
 
@@ -42,42 +40,19 @@ const RiderModal: React.FC<RiderModalProps> = ({
 
         {/* Modal Body */}
         <div className="p-6 max-h-[60vh] overflow-y-auto">
-          <div className="flex flex-col gap-4">
-            {riders.map((rider) => (
-              <div
-                key={rider.id}
-                className={`flex items-center justify-between p-4 rounded-xl cursor-pointer transition-all duration-200 ${
-                  selectedRider === rider.id
-                    ? 'border border-orange-400 bg-orange-400/5'
-                    : 'border border-neutral-200 hover:bg-neutral-50'
-                }`}
-                onClick={() => onSelectRider(rider.id)}
-              >
-                <div className="flex items-center gap-3">
-                  {/* Custom Radio Button */}
-                  <div className={`w-5 h-5 rounded-full border flex items-center justify-center ${
-                    selectedRider === rider.id
-                      ? 'border-orange-400 bg-orange-400'
-                      : 'border-neutral-300'
-                  }`}>
-                    {selectedRider === rider.id && (
-                      <div className="w-2 h-2 rounded-full bg-white" />
-                    )}
-                  </div>
-                  
-                  <div>
-                    <p className="text-black font-medium">{rider.name}</p>
-                    <p className="text-black/50 text-sm">{rider.phone}</p>
-                  </div>
-                </div>
-                
-                <div className="text-right">
-                  <p className="text-black text-sm font-medium">{rider.rating.toFixed(1)} ⭐</p>
-                  <p className="text-black/50 text-xs">{rider.totalRides} rides</p>
-                </div>
-              </div>
-            ))}
-          </div>
+           <section className='w-full flex gap-2 items-center justify-start'>
+              <p className='text-black text-base font-semibold'>John Doe</p>
+              <div className='w-1 h-1 rounded-full bg-neutral-200' />
+              <p className='text-black/50 text-sm '>08123456789</p>
+            </section>
+
+            <section className='w-full flex gap-2 items-center justify-start'>
+              <p className='text-black text-xs font-semibold'>24 <span className='text-black/50 font-normal'>Total Rides</span> </p>
+              <div className='w-1 h-1 rounded-full bg-neutral-200' />
+              <p className='text-black text-xs font-semibold'>26/12/25<span className='text-black/50 font-normal'> Date Added</span> </p>
+              <div className='w-1 h-1 rounded-full bg-neutral-200' />
+              <p className='text-black text-xs font-semibold'>4.6<span className='text-black/50 font-normal'> Rating</span> </p>
+            </section>
         </div>
 
         {/* Modal Footer */}
@@ -113,7 +88,7 @@ const RiderModal: React.FC<RiderModalProps> = ({
 const RidersSection: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedRider, setSelectedRider] = useState<string | null>(null);
-  const [riders, setRiders] = useState<Rider[]>([
+  const [riders] = useState<Rider[]>([
     {
       id: '1',
       name: 'John Doe',

@@ -1,6 +1,4 @@
 import './../App.css'
-import { useState } from 'react';
-import PrimaryButton from '../components/PrimaryButton';
 import { useNavigate } from 'react-router-dom';
 
 interface AppProps {
@@ -8,7 +6,7 @@ interface AppProps {
   goToAddOrders: () => void;
 }
 
-function App({goToPreparedList, goToAddOrders}: AppProps) {
+function App({goToAddOrders}: AppProps) {
   const navigate = useNavigate();
 
 
