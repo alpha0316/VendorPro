@@ -5,14 +5,18 @@ import Tesseract from 'tesseract.js'
 import PrimaryButton from '../components/PrimaryButton'
 
 interface ExtractedOrder {
-  image: File
-  name: string
-  phone: string
-  location: string
-  product: string
-  amount: string
-  rawText: string
+  image?: File;
+  rawText?: string;
+  name: string;
+  phone: string;
+  items: {
+    name: string;
+    price?: number;
+  }[];
+  location: string;
 }
+
+
 
 function UploadOrders() {
   const navigate = useNavigate()
@@ -23,8 +27,8 @@ function UploadOrders() {
 
   /* -------------------- OCR PARSER -------------------- */
   const extractOrderFromText = (text: string, image: File): ExtractedOrder => {
-    const phoneMatch = text.match(/0\d{9}/)
-    const amountMatch = text.match(/(GHC|GH¢|₵)\s?\d+/i)
+    const phoneMatch = text.match(/(\+233\s?\d{2}\s?\d{3}\s?\d{4}|0\d{2}\s?\d{3}\s?\d{4}|0\d{9})/);
+  const phone = phoneMatch ? phoneMatch[0].replace(/\s+/g, '') : '';
 
     const lines = text
       .split('\n')

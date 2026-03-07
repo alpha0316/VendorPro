@@ -8,9 +8,19 @@ import PreparedList from './screens/PreparedList';
 import CopyAndPaste from './screens/CopyAndPaste';
 import TypeOrders from './screens/TypeOrders';
 
+interface ExtractedOrder {
+  image?: File;
+  rawText?: string;
+  name: string;
+  phone: string;
+  product: string;
+  amount: string;
+  location: string;
+}
+
 const App = () => {
   const [activeTab, setActiveTab] = useState('AddOrders');
-  const [preparedOrders, setPreparedOrders] = useState([]); // Added missing state
+  const [preparedOrders, setPreparedOrders] = useState<ExtractedOrder[]>([]);
 
   const renderTab = () => {
     switch (activeTab) {
@@ -32,11 +42,11 @@ const App = () => {
         );
 
       case 'OrderHistory': 
-        return <OrderHistory />;
+        return <OrderHistory goToAddOrders={() => setActiveTab('AddOrders')} />;
       case 'YourRiders': 
-        return <YourRiders />;
+        return <YourRiders goToAddOrders={() => setActiveTab('AddOrders')} />;
       case 'Analytics': 
-        return <Analytics />;
+        return <Analytics goToAddOrders={() => setActiveTab('AddOrders')} />;
       
       case 'OrderImages':
         return (
@@ -45,7 +55,6 @@ const App = () => {
               setPreparedOrders(orders); // Now this will work
               setActiveTab('PreparedList');
             }}
-            goBackToAddOrders={() => setActiveTab('AddOrders')}
           />
         );
 
@@ -78,7 +87,7 @@ const App = () => {
 
       <aside className="flex gap-2 items-center justify-center px-3 py-2.5 bg-neutral-50 rounded-[38px] fixed bottom-10">
         <section className="h-full flex gap-4 items-center justify-center">
-          {/* Add Orders Button */}
+          {/* Home Button */}
           <button 
             onClick={() => setActiveTab('AddOrders')} 
             className={`inline-flex items-center justify-center gap-2 p-3 rounded-3xl transition-colors
@@ -87,12 +96,24 @@ const App = () => {
                 : 'bg-white text-black/50 hover:bg-red-600/10 hover:text-red-600'
               }`}
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17" fill="none">
-              <path d="M4.24963 8.78052H12.2496" stroke={activeTab === 'AddOrders' ? "#FF2F1E" : "#FF2F1E"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-              <path d="M8.24963 12.7805V4.78052" stroke={activeTab === 'AddOrders' ? "#FF2F1E" : "#FF2F1E"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M3 10.5L12 3L21 10.5V20C21 20.5523 20.5523 21 20 21H4C3.44772 21 3 20.5523 3 20V10.5Z"
+                stroke="#FF2F1E"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M9 21V14H15V21"
+                stroke="#FF2F1E"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
             </svg>
             <span className={`text-sm font-normal ${activeTab === 'AddOrders' ? 'text-black' : 'text-black/50 group-hover:text-red-600'}`}>
-              Add Orders
+              Home
             </span>
           </button>
 

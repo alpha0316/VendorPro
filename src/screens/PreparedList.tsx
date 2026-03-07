@@ -36,6 +36,36 @@ type PreparedListProps = {
   goToAddOrders: () => void;
 };
 
+type StorageLike = {
+  get: (key: string, secure: boolean) => Promise<{ value?: string } | null>;
+  set: (key: string, value: string, secure: boolean) => Promise<void>;
+};
+
+const isValidExtractedOrder = (order: ExtractedOrder | null | undefined): order is ExtractedOrder => {
+  if (!order) return false;
+  return Boolean(order.name || order.phone || order.product || order.location);
+};
+
+const normalizeItemsForUI = (product: string, amount: string) => {
+  const itemString = (product || 'Unknown product')
+    .split(',')
+    .map(item => item.trim())
+    .filter(Boolean)
+    .join(', ');
+
+  const parsedAmount = parseFloat(amount);
+  const totalPrice = Number.isFinite(parsedAmount) ? `₵${parsedAmount.toFixed(2)}` : '₵0.00';
+
+  return { itemString: itemString || 'Unknown product', totalPrice };
+};
+
+const getStorage = (): StorageLike | null => {
+  const maybeStorage = (window as Window & { storage?: StorageLike }).storage;
+  if (!maybeStorage) return null;
+  if (typeof maybeStorage.get !== 'function' || typeof maybeStorage.set !== 'function') return null;
+  return maybeStorage;
+};
+
 /* ---------------- RANDOM SOFT COLOR GENERATOR ---------------- */
 const getRandomSoftColor = () => {
   // Array of soft, light colors with good text contrast
@@ -248,7 +278,7 @@ const OrderItem: React.FC<{
         onClick={onToggle}
       >
         <div className='flex gap-3 items-start justify-start'>
-          <CheckCircleIcon checked={checked} onToggle={onToggle} size={18} />
+          <CheckCircleIcon defaultChecked={checked} onChange={onToggle} size={18} />
 
           <div className='flex gap-2 items-start justify-start'>
             <p className='text-black/70 text-xs font-semibold'>{id}</p>
@@ -319,18 +349,25 @@ const PreparedList: React.FC<PreparedListProps> = ({
   const [savedOrders, setSavedOrders] = useState<Order[]>([]);
   const [isLoadingSaved, setIsLoadingSaved] = useState(true);
 
-  useEffect(() => {
-    // Transform incoming orders
-    const transformedOrders = incomingOrders.map((order, index) => ({
-      id: `#${String(index + 11).padStart(3, '0')}`,
-      name: order.name || 'Unknown',
-      phone: order.phone || '',
-      hall: order.location || '',
-      item: order.product || '',
-      price: order.amount ? `GHC ${order.amount}` : ''
-    }));
-    setOrders(transformedOrders);
-  }, [incomingOrders]);
+useEffect(() => {
+  const transformedOrders = incomingOrders
+    .filter(isValidExtractedOrder)
+    .map((order, index) => {
+      const { itemString, totalPrice } = normalizeItemsForUI(order.product, order.amount);
+
+      return {
+        id: `#${String(index + 11).padStart(3, '0')}`,
+        name: order.name,
+        phone: order.phone,
+        hall: order.location,
+        item: itemString,
+        price: totalPrice
+      };
+    });
+
+  setOrders(transformedOrders);
+}, [incomingOrders]);
+
 
   const [selectedOrders, setSelectedOrders] = useState<string[]>([]);
   const [isRiderModalOpen, setIsRiderModalOpen] = useState(false);
@@ -411,8 +448,11 @@ const PreparedList: React.FC<PreparedListProps> = ({
       // Clear selection after saving
       setSelectedOrders([]);
 
-      // Save to persistent storage
-      await window.storage.set('savedOrders', JSON.stringify(newSavedOrders), false);
+      // Save to persistent storage when available.
+      const storage = getStorage();
+      if (storage) {
+        await storage.set('savedOrders', JSON.stringify(newSavedOrders), false);
+      }
 
       alert(`${selectedOrderData.length} order(s) saved successfully!`);
     } catch (error) {
@@ -455,7 +495,10 @@ const PreparedList: React.FC<PreparedListProps> = ({
 
     // Update persistent storage
     try {
-      await window.storage.set('savedOrders', JSON.stringify(newSavedOrders), false);
+      const storage = getStorage();
+      if (storage) {
+        await storage.set('savedOrders', JSON.stringify(newSavedOrders), false);
+      }
     } catch (error) {
       console.error('Error updating saved orders:', error);
     }
@@ -466,10 +509,13 @@ const PreparedList: React.FC<PreparedListProps> = ({
     const loadSavedOrders = async () => {
       try {
         setIsLoadingSaved(true);
-        const result = await window.storage.get('savedOrders', false);
-        if (result && result.value) {
-          const parsedSavedOrders = JSON.parse(result.value);
-          setSavedOrders(parsedSavedOrders);
+        const storage = getStorage();
+        if (storage) {
+          const result = await storage.get('savedOrders', false);
+          if (result && result.value) {
+            const parsedSavedOrders = JSON.parse(result.value);
+            setSavedOrders(parsedSavedOrders);
+          }
         }
       } catch (error) {
         // Key doesn't exist yet or error loading
@@ -638,8 +684,8 @@ const PreparedList: React.FC<PreparedListProps> = ({
                   }}
                 >
                   <CheckCircleIcon
-                    checked={selectedOrders.length === savedOrders.length && savedOrders.length > 0}
-                    onToggle={() => { }}
+                    defaultChecked={selectedOrders.length === savedOrders.length && savedOrders.length > 0}
+                    onChange={() => { }}
                     size={18}
                   />
                   <span className="text-sm text-black/70">

@@ -1,5 +1,28 @@
 import React from "react";
 
+const getRandomSoftColor = () => {
+    const softColors = [
+        'bg-red-50',
+        'bg-orange-50',
+        'bg-amber-50',
+        'bg-yellow-50',
+        'bg-lime-50',
+        'bg-green-50',
+        'bg-emerald-50',
+        'bg-teal-50',
+        'bg-cyan-50',
+        'bg-sky-50',
+        'bg-blue-50',
+        'bg-indigo-50',
+        'bg-violet-50',
+        'bg-purple-50',
+        'bg-fuchsia-50',
+        'bg-pink-50',
+        'bg-rose-50'
+    ];
+    return softColors[Math.floor(Math.random() * softColors.length)];
+};
+
 /* ---------------- CHECK ICON ---------------- */
 const CheckCircleIcon = ({
     checked = false,
@@ -45,18 +68,13 @@ type Order = {
     id: string;
     name: string;
     phone: string;
-    location: string;
+    location?: string;
+    hall?: string;
     item: string;
-    amount: string;
+    amount?: string;
+    price?: string;
     date: Date;
 };
-
-interface OrderItemProps {
-    order: Order;
-    checked: boolean;
-    onToggle: () => void;
-    showDateHeader?: boolean;
-}
 
 /* ---------------- UPDATED ORDER ITEM COMPONENT ---------------- */
 const OrderItem: React.FC<{
@@ -64,7 +82,9 @@ const OrderItem: React.FC<{
   checked: boolean;
   onToggle: () => void;
 }> = ({ order, checked, onToggle }) => {
-  const { id, name, phone, hall, item, price } = order;
+  const { id, name, phone, hall, location, item, price, amount } = order;
+  const displayLocation = hall || location || 'Pick-up';
+  const displayPrice = price || amount || '';
   
   // Generate random soft color for this order
   const orderColor = getRandomSoftColor();
@@ -124,14 +144,14 @@ const OrderItem: React.FC<{
               <div className="flex justify-center items-center gap-2">
                 <p className="text-black/70 text-[10px] font-normal">{phone}</p>
                 <div className="w-px h-3 bg-gray-600/30"></div>
-                <p className="text-black/70 text-[10px]">{hall}</p>
+                <p className="text-black/70 text-[10px]">{displayLocation}</p>
               </div>
             </div>
           </div>
         </div>
 
         <div className="flex items-center gap-2">
-          <p className="text-black text-sm font-semibold">{price}</p>
+          <p className="text-black text-sm font-semibold">{displayPrice}</p>
         </div>
       </div>
 
@@ -243,13 +263,12 @@ const OrdersList: React.FC<OrdersListProps> = ({ onCheckChange, orders = [] }) =
         <div className="flex flex-col gap-4 w-full">
             {sortedGroups.map(([dateKey, groupOrders]) => (
                 <div key={dateKey} className="flex flex-col gap-3">
-                    {groupOrders.map((order, index) => (
+                    {groupOrders.map((order) => (
                         <OrderItem
                             key={order.id}
                             order={order}
                             checked={!!checkedItems[order.id]}
                             onToggle={() => handleToggle(order.id)}
-                            showDateHeader={shouldShowDateHeaders && index === 0}
                         />
                     ))}
                 </div>

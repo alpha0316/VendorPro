@@ -1,11 +1,13 @@
 
 import './../App.css'
 
+interface AppProps {
+  goToAddOrders: () => void;
+}
 
 
-function App() {
+function App({ goToAddOrders }: AppProps) {
 
-  // const navigate = useNavigate();
 
 
   return (
@@ -15,7 +17,7 @@ function App() {
         <section className='flex flex-col w-full '>
           <div className='flex items-center justify-between w-[1132px] mt-8 '>
             <div
-              onClick={() => navigate('/AddOrders')}
+              onClick={goToAddOrders}
               className="justify-center items-center flex-row hidden sm:flex">
               <img src="/logo.png" alt="Logo" className="h-5 w-3" />
               <span className="text-red-600 text-lg font-bold p-0">B</span>
