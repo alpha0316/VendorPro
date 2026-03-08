@@ -1,4 +1,3 @@
-
 import './../App.css'
 
 import RevenueChart from '../components/ExpenseGraph';
@@ -16,27 +15,29 @@ function App({ goToAddOrders }: AppProps) {
     <>
       <main className='flex flex-col items-center w-full '>
         <section className='flex flex-col w-full '>
-          <div className='flex items-center justify-between w-283 mt-8 '>
+          <div className='flex items-center justify-between w-full px-3 sm:px-6 md:px-8 mt-4 sm:mt-6 md:mt-8'>
             <div
               onClick={goToAddOrders}
-              className="justify-center items-center flex-row hidden sm:flex">
-              <img src="/logo.png" alt="Logo" className="h-5 w-3" />
-              <span className="text-red-600 text-lg font-bold p-0">B</span>
-              <span className="text-black/50 text-lg font-bold ">ites.</span>
+              className="flex items-center cursor-pointer">
+              <img src="/logo.png" alt="Logo" className="h-4 sm:h-5 w-2.5 sm:w-3" />
+              <span className="text-red-600 text-base sm:text-lg font-bold p-0">B</span>
+              <span className="text-black/50 text-base sm:text-lg font-bold ">ites.</span>
             </div>
 
-            <div className="h-6 px-1 py-2.5 bg-orange-400 rounded-[50px] inline-flex flex-col justify-center items-center gap-2.5">
-              <div className="text-center justify-start text-white text-xs">R 👩🏽‍🍳</div>
+            <div className="h-5 sm:h-6 px-1 sm:px-1.5 py-1.5 sm:py-2.5 bg-orange-400 rounded-[50px] flex items-center justify-center">
+              <div className="text-center text-white text-xs">R 👩🏽‍🍳</div>
             </div>
           </div>
         </section>
 
-        <main className='flex  w-full flex-col items-center justify-center gap-3 mt-8'>
+        <main className='flex w-full flex-col items-center justify-center gap-3 px-3 sm:px-6 md:px-8 mt-8'>
           <p className="text-black text-base font-bold w-full text-left">Analytics</p>
 
-          <section className='flex w-full items-center justify-between gap-4 '>
+          {/* ── 2-col on mobile, 4-col on desktop — card internals unchanged ── */}
+          <section className='grid grid-cols-2 min-[788px]:grid-cols-4 gap-6 w-full'>
+
             <figure>
-              <div className="w-64 inline-flex flex-col justify-start items-start gap-6">
+              <div className="w-44 inline-flex flex-col justify-start items-start gap-6">
                 <div className="self-stretch p-1 bg-neutral-50 rounded-lg inline-flex justify-between items-center">
                   <div className="flex justify-start items-center gap-3.5">
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
@@ -50,18 +51,18 @@ function App({ goToAddOrders }: AppProps) {
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
                       <path d="M7.58345 11.6667L6.41678 11.6667L6.41678 4.66667L3.20845 7.875L2.38012 7.04667L7.00012 2.42667L11.6201 7.04667L10.7918 7.875L7.58345 4.66667L7.58345 11.6667Z" fill="#48BB78" />
                     </svg>
-                    <div className="justify-start text-green-400 text-xs font-normal ">(+25%)</div>
+                    <div className="justify-start text-green-400 text-xs font-normal md:block hidden ">(+25%)</div>
                   </div>
                 </div>
                 <div className="flex flex-col justify-start items-start gap-2">
-                  <div className="justify-start text-black/80 text-2xl font-semibold">GHC 8,201.00</div>
-                  <div className="justify-start"><span className="text-black/50 text-sm font-normal ">Total Revenue since </span><span className="text-black/80 text-sm font-normal ">5th Dec 25</span></div>
+                  <div className="justify-start text-black/80 md:text-2xl text-1xl font-semibold">GHC 8,201.00</div>
+                  <div className="justify-start flex gap-2 "><span className="text-black/50 text-sm font-normal hidden sm:block ">Total Revenue since </span><span className="text-black/80 text-sm font-normal ">5th Dec 25</span></div>
                 </div>
               </div>
             </figure>
 
             <figure>
-              <div className="w-64 inline-flex flex-col justify-start items-start gap-6">
+              <div className="w-44 inline-flex flex-col justify-start items-start gap-6">
                 <div className="self-stretch p-1 bg-blue-600/5  rounded-lg inline-flex justify-between items-center">
                   <div className="flex justify-start items-center gap-3.5">
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
@@ -75,18 +76,18 @@ function App({ goToAddOrders }: AppProps) {
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
                       <path d="M7.58345 11.6667L6.41678 11.6667L6.41678 4.66667L3.20845 7.875L2.38012 7.04667L7.00012 2.42667L11.6201 7.04667L10.7918 7.875L7.58345 4.66667L7.58345 11.6667Z" fill="#48BB78" />
                     </svg>
-                    <div className="justify-start text-green-400 text-xs font-normal ">(+25%)</div>
+                    <div className="justify-start text-green-400 text-xs font-normal md:block hidden">(+25%)</div>
                   </div>
                 </div>
                 <div className="flex flex-col justify-start items-start gap-2">
-                  <div className="justify-start"><span className="text-black/80 text-2xl font-semibold ">131 </span><span className="text-black/40 text-base font-normal">Orders</span></div>
-                  <div className="justify-start"><span className="text-black/50 text-sm font-normal">All Orders since </span><span className="text-black/80 text-sm font-normal ">5th Dec 25</span></div>
+                  <div className="justify-start"><span className="text-black/80 md:text-2xl text-1xl font-semibold ">131 </span><span className="text-black/40 text-base font-normal">Orders</span></div>
+                  <div className="justify-start"><span className="text-black/50 text-sm font-normal md:block hidden">All Orders since </span><span className="text-black/80 text-sm font-normal ">5th Dec 25</span></div>
                 </div>
               </div>
             </figure>
 
             <figure>
-              <div className="w-64 inline-flex flex-col justify-start items-start gap-6">
+              <div className="w-44 inline-flex flex-col justify-start items-start gap-6">
                 <div className="self-stretch p-1 bg-teal-400/5 rounded-lg inline-flex justify-between items-center">
                   <div className="flex justify-start items-center gap-3.5">
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
@@ -98,19 +99,19 @@ function App({ goToAddOrders }: AppProps) {
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
                       <path d="M7.58345 11.6667L6.41678 11.6667L6.41678 4.66667L3.20845 7.875L2.38012 7.04667L7.00012 2.42667L11.6201 7.04667L10.7918 7.875L7.58345 4.66667L7.58345 11.6667Z" fill="#48BB78" />
                     </svg>
-                    <div className="justify-start text-green-400 text-xs font-normal ">(+25%)</div>
+                    <div className="justify-start text-green-400 text-xs font-normal md:block hidden">(+25%)</div>
                   </div>
                 </div>
                 <div className="flex flex-col justify-start items-start gap-2">
-                  <div className="justify-start text-black/80 text-2xl font-semibold">112</div>
-                  <div className="justify-start"><span className="text-black/80 text-sm font-normal">19 Orders </span><span className="text-black/40 text-sm font-normal "> Picked Up By Customers</span></div>
+                  <div className="justify-start text-black/80  md:text-2xl text-1xl font-semibold">112</div>
+                  <div className="justify-start"><span className="text-black/80 text-sm font-normal">19 Orders </span><span className="text-black/40 text-sm font-normal "> Picked</span></div>
                 </div>
               </div>
             </figure>
 
             <figure>
-              <div className="w-64 inline-flex flex-col justify-start items-start gap-6">
-                <div className="self-stretch p-1 bg-red-500/5rounded-lg inline-flex justify-between items-center">
+              <div className="w-44 inline-flex flex-col justify-start items-start gap-6">
+                <div className="self-stretch p-1 bg-red-500/5 rounded-lg inline-flex justify-between items-center">
                   <div className="flex justify-start items-center gap-3.5">
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
                       <path d="M11.6492 1.02083H9.93417C9.19333 1.02083 8.75 1.46416 8.75 2.20499V3.91999C8.75 4.66083 9.19333 5.10416 9.93417 5.10416H11.6492C12.39 5.10416 12.8333 4.66083 12.8333 3.91999V2.20499C12.8333 1.46416 12.39 1.02083 11.6492 1.02083ZM11.7775 2.95166C11.7075 3.02166 11.6142 3.05666 11.5208 3.05666C11.4275 3.05666 11.3342 3.02166 11.2642 2.95166L11.1592 2.84666V4.15333C11.1592 4.3575 10.9958 4.52083 10.7917 4.52083C10.5875 4.52083 10.4242 4.3575 10.4242 4.15333V2.84666L10.3192 2.95166C10.1792 3.09166 9.94583 3.09166 9.80583 2.95166C9.66583 2.81166 9.66583 2.57833 9.80583 2.43833L10.535 1.70916C10.5642 1.67999 10.605 1.65666 10.6458 1.63916C10.6575 1.63333 10.6692 1.63333 10.6808 1.62749C10.71 1.61583 10.7392 1.60999 10.7742 1.60999C10.7858 1.60999 10.7975 1.60999 10.8092 1.60999C10.85 1.60999 10.885 1.61583 10.9258 1.63333C10.9317 1.63333 10.9317 1.63333 10.9375 1.63333C10.9783 1.65083 11.0133 1.67416 11.0425 1.70333C11.0483 1.70916 11.0483 1.70916 11.0542 1.70916L11.7833 2.43833C11.9233 2.57833 11.9233 2.81166 11.7775 2.95166Z" fill="#FF383C" />
@@ -123,16 +124,15 @@ function App({ goToAddOrders }: AppProps) {
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
                       <path d="M7.58345 11.6667L6.41678 11.6667L6.41678 4.66667L3.20845 7.875L2.38012 7.04667L7.00012 2.42667L11.6201 7.04667L10.7918 7.875L7.58345 4.66667L7.58345 11.6667Z" fill="#48BB78" />
                     </svg>
-                    <div className="justify-start text-green-400 text-xs font-normal ">(+25%)</div>
+                    <div className="justify-start text-green-400 text-xs font-normal md:block hidden">(+25%)</div>
                   </div>
                 </div>
                 <div className="flex flex-col justify-start items-start gap-2">
-                  <div className="justify-start text-black/80 text-2xl font-semibold ">GHC 80.00</div>
+                  <div className="justify-start text-black/80 md:text-2xl text-1xl font-semibold ">GHC 80.00</div>
                   <div className="justify-start text-black/80 text-sm font-normal">1 Order</div>
                 </div>
               </div>
             </figure>
-
 
           </section>
 
@@ -141,8 +141,6 @@ function App({ goToAddOrders }: AppProps) {
           </section>
 
         </main>
-
-
 
       </main>
     </>

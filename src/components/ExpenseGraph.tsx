@@ -95,8 +95,8 @@ const ordersByDate = [
 ];
 
 const RevenueDashboard = () => {
-  const [activeTab, setActiveTab] = useState('revenue');
-  const [activeFilters, setActiveFilters] = useState(['all']);
+  const [activeTab] = useState('revenue');
+  const [activeFilters] = useState(['all']);
 
   // Transform orders data into chart format
   const transformOrdersToChartData = () => {
@@ -133,34 +133,8 @@ const RevenueDashboard = () => {
   const baseChartData = transformOrdersToChartData();
 
   // Toggle filter on/off
-  const toggleFilter = (filterKey: string) => {
-    if (filterKey === 'all') {
-      // If clicking "All", reset to only "All"
-      setActiveFilters(['all']);
-    } else {
-      // Remove "all" if it exists (since we're selecting a specific filter)
-      const newFilters = activeFilters.filter(f => f !== 'all');
-      
-      // Toggle the specific filter
-      if (newFilters.includes(filterKey)) {
-        // Remove filter if it's already active
-        const updatedFilters = newFilters.filter(f => f !== filterKey);
-        // If no filters left, default to "all"
-        setActiveFilters(updatedFilters.length > 0 ? updatedFilters : ['all']);
-      } else {
-        // Add filter if it's not active
-        setActiveFilters([...newFilters, filterKey]);
-      }
-    }
-  };
 
   // Check if a filter is active
-  const isFilterActive = (filterKey: string) => {
-    if (filterKey === 'all') {
-      return activeFilters.includes('all') || activeFilters.length === 0;
-    }
-    return activeFilters.includes(filterKey);
-  };
 
   // Filter chart data based on active filters
   const getFilteredData = () => {
@@ -292,12 +266,12 @@ const RevenueDashboard = () => {
   const yAxisTicks = generateYAxisTicks();
 
   return (
-    <div className="p-8 bg-white rounded-xl font-sans">
+    <div className=" bg-white rounded-xl font-sans">
       {/* Header Section */}
       <div className="flex justify-between items-start mb-8">
         <div>
           {/* Tab Switcher */}
-          <div className="flex bg-gray-100 p-1 rounded-md w-fit mb-4">
+          {/* <div className="flex bg-gray-100 p-1 rounded-md w-fit mb-4">
             <button 
               onClick={() => setActiveTab('revenue')}
               className={`px-4 py-1 rounded text-sm font-medium transition-all ${
@@ -318,15 +292,15 @@ const RevenueDashboard = () => {
             >
               Orders
             </button>
-          </div>
-          
-          <h2 className="text-3xl font-bold text-gray-900 capitalize">
+          </div> */}
+
+          <h2 className="md:text-3xl text-1xl font-bold text-gray-900 capitalize">
             {activeTab === 'revenue' ? 'Revenue' : 'Orders'}
           </h2>
         </div>
 
         {/* Filters/Legend */}
-        <div className="flex flex-wrap gap-2 pt-2 max-w-md justify-end">
+        {/* <div className="flex flex-wrap gap-2 pt-2 max-w-md justify-end">
           {statusConfig.map((status) => (
             <button
               key={status.key}
@@ -340,7 +314,7 @@ const RevenueDashboard = () => {
               {status.label}
             </button>
           ))}
-        </div>
+        </div> */}
       </div>
 
       {/* Chart Section */}

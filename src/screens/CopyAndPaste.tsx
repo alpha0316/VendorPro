@@ -1,101 +1,66 @@
 import './../App.css'
-import { useNavigate } from 'react-router-dom';
 
 interface AppProps {
   goToPreparedList: () => void;
   goToAddOrders: () => void;
 }
 
-function App({goToAddOrders}: AppProps) {
-  const navigate = useNavigate();
-
-
+function App({ goToAddOrders }: AppProps) {
   return (
-    <>
-      <main className="flex w-283 flex-col gap-12">
-        {/* HEADER */}
-        <div className="flex items-center justify-between w-full max-full mx-auto mt-8">
-          <div
-            onClick={goToAddOrders}
-            className="justify-center items-center flex-row hidden sm:flex cursor-pointer"
-          >
-            <img src="/logo.png" alt="Logo" className="h-5 w-3" />
-            <span className="text-red-600 text-lg font-bold p-0">B</span>
-            <span className="text-black/50 text-lg font-bold">ites.</span>
-          </div>
+    <main className="flex flex-col items-center w-full min-h-screen px-4 sm:px-6 md:px-8">
 
-          <div className="h-6 px-1 py-2.5 bg-orange-400 rounded-[50px] inline-flex flex-col justify-center items-center gap-2.5">
-            <div className="text-center justify-start text-white text-xs">R 👩🏽‍🍳</div>
-          </div>
+      {/* HEADER */}
+      <div className="flex items-center justify-between w-full max-w-7xl mx-auto mt-4 sm:mt-6 md:mt-8">
+        <div
+          onClick={goToAddOrders}
+          className="flex items-center cursor-pointer"
+        >
+          <img src="/logo.png" alt="Logo" className="h-4 sm:h-5 w-2.5 sm:w-3" />
+          <span className="text-red-600 text-base sm:text-lg font-bold">B</span>
+          <span className="text-black/50 text-base sm:text-lg font-bold">ites.</span>
         </div>
 
-        {/* NAV */}
-        <section className="flex flex-col items-center justify-center gap-4">
-          <nav className="flex w-full items-center justify-between max-w-158">
-            <div className="flex gap-3 items-center">
-              <div
-                style={{
-                  display: 'flex',
-                  backgroundColor: '#F6F6F6',
-                  borderRadius: 36,
-                  padding: 8,
-                  alignItems: 'center',
-                  cursor: 'pointer'
-                }}
-                onClick={() => navigate(-1)}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                >
-                  <path
-                    d="M10 13L5 8L10 3"
-                    stroke="black"
-                    strokeOpacity="0.6"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </div>
+        <div className="h-5 sm:h-6 px-1 sm:px-1.5 py-1.5 sm:py-2.5 bg-orange-400 rounded-[50px] flex items-center justify-center">
+          <div className="text-center text-white text-xs">R 👩🏽‍🍳</div>
+        </div>
+      </div>
 
+      {/* CONTENT — top-aligned on mobile, shifted up on desktop */}
+      <section className="
+        flex flex-col gap-4 w-full max-w-2xl mx-auto
+        mt-8
+        sm:min-h-[calc(100vh-80px)] sm:justify-start sm:-mt-24
+      ">
+        <div className="flex flex-col gap-3.5">
+          <p className="text-black text-2xl sm:text-3xl font-bold text-left leading-snug">
+            Paste Your Orders —<br className="hidden sm:block" /> We'll Handle the Rest ✨
+          </p>
+          <p className="text-black/50 text-sm font-normal text-left">
+            Simply paste your raw order messages from WhatsApp, Telegram, or anywhere else.
+            Our system will automatically extract names, numbers, and order details — ready for review.
+          </p>
+        </div>
+
+        <div className="w-full h-52 bg-neutral-50 rounded-2xl outline outline-black/5 flex flex-col items-start justify-between p-4">
+          <input
+            type="text"
+            placeholder="What's cooking today?"
+            className="w-full bg-transparent rounded-2xl outline-none placeholder:text-black/30 text-black/50 text-sm font-normal"
+          />
+
+          <div className="w-full flex items-end justify-end">
+            <div className="p-1.5 bg-orange-400 rounded-lg cursor-pointer hover:bg-orange-500 transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M9.62 3.95312L13.6667 7.99979L9.62 12.0465" stroke="white" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M2.33337 8H13.5534" stroke="white" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
             </div>
+          </div>
+        </div>
+      </section>
 
-          
-          </nav>
-
-          <main className='flex flex-col items-start justify-center gap-4'>
-              <div className="w-158 inline-flex flex-col justify-start items-start gap-3.5">
-                  <p className="self-stretch justify-start text-black text-3xl font-bold text-left">Paste Your Orders — We’ll Handle the Rest ✨</p>
-                  <p className="justify-start text-black/50 text-sm font-normal text-left">Simply paste your raw order messages from WhatsApp, Telegram, or anywhere else.  Our system will automatically extract names, numbers, and order details — ready for review</p>
-              </div>
-
-              <section className='w-full h-52 bg-neutral-50 rounded-2xl outline-1 outline-black/5 flex flex-col items-start justify-between p-4 '>
-                  <input 
-                    type="text"
-                    placeholder='What’s cooking today?'
-                    className='rounded-2xl outline-none placeholder:text-black/30 text-black/50 text-sm font-normal flex items-start justify-start'
-                    />
-
-                    <div className='w-full items-end justify-end flex'>
-                      <div className='p-1.5 bg-orange-400 rounded-lg cursor-pointer'>
-                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                            <path d="M9.62 3.95312L13.6667 7.99979L9.62 12.0465" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M2.33337 8H13.5534" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-                          </svg>
-                      </div>
-                    </div>
-              </section>
-          </main>
-
-        </section>
-      </main>
-    </>
+    </main>
   );
 }
-
 
 export default App;
