@@ -39,7 +39,7 @@ export const useShuttleSocket = () => {
     // You can lift this state up or use a context for global access
     // For now, let's use a callback or setter passed as an argument (see below for usage)
     socket.on("shuttle-locations", (shuttles) => {
-      shuttles.forEach((shuttle: { shuttleId: any; name: any; location: any; route: any; }) => {
+      shuttles.forEach(() => {
       // console.log(`  Location: ${JSON.stringify(shuttle.location)}`);
       });
       // If you have a setter, call it here
