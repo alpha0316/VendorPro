@@ -14,6 +14,8 @@ interface ExtractedOrder {
     price?: number;
   }[];
   location: string;
+  product?: string;
+  amount?: string;
 }
 
 
@@ -28,7 +30,6 @@ function UploadOrders() {
   /* -------------------- OCR PARSER -------------------- */
   const extractOrderFromText = (text: string, image: File): ExtractedOrder => {
     const phoneMatch = text.match(/(\+233\s?\d{2}\s?\d{3}\s?\d{4}|0\d{2}\s?\d{3}\s?\d{4}|0\d{9})/);
-  const phone = phoneMatch ? phoneMatch[0].replace(/\s+/g, '') : '';
 
     const lines = text
       .split('\n')
@@ -45,6 +46,8 @@ function UploadOrders() {
         /(hall|hostel|room|block|campus)/i.test(l)
       ) || ''
 
+    const amountMatch = text.match(/(?:GH₵|₵|\₵|GHS)?\s?\d+(?:,\d{3})*(?:\.\d{2})?/i);
+
     const product =
       lines.find(
         l =>
@@ -55,14 +58,15 @@ function UploadOrders() {
       ) || ''
 
     return {
-      image,
-      name,
-      phone: phoneMatch?.[0] || '',
-      location,
-      product,
-      amount: amountMatch?.[0] || '',
-      rawText: text
-    }
+  image,
+  name,
+  phone: phoneMatch?.[0] || '',
+  location,
+  product,
+  amount: amountMatch?.[0] || '',
+  rawText: text,
+  items: []
+}
   }
 
   /* -------------------- IMAGE UPLOAD -------------------- */
