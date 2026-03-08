@@ -1,8 +1,6 @@
 import './../App.css';
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Tesseract from 'tesseract.js';
-import PrimaryButton from '../components/PrimaryButton';
-
 
 
 interface ExtractedOrder {
@@ -22,13 +20,7 @@ interface ExtractedOrder {
 
 interface OrderImagesProps {
   goToPreparedList: (orders: ExtractedOrder[]) => void;
-  // FIX 5: Removed unused `goBackToAddOrders` from the interface entirely.
-  // If it is genuinely needed elsewhere, add it back and wire it to a button.
 }
-
-
-
-
 
 /* ==================== HOSTEL NORMALIZATION MAP ==================== */
 const HOSTEL_NORMALIZATION_MAP: Record<string, string> = {
@@ -231,14 +223,10 @@ const OrderImages: React.FC<OrderImagesProps> = ({ goToPreparedList }) => {
   const [progress, setProgress] = useState({ current: 0, total: 0 });
   const [ocrProgress, setOcrProgress] = useState(0);
   const [processingStage, setProcessingStage] = useState<'idle' | 'ocr' | 'geocoding'>('idle');
-  const [validatingLocations, setValidatingLocations] = useState(false);
-  // FIX 3: Replaced the `geocodingResults` state (written on every geocode, causing
-  // unnecessary re-renders) with a simple counter ref + a derived counter state
-  // that only ticks up once per geocoded order.
+  const [, setValidatingLocations] = useState(false);
   const geocodedCountRef = useRef(0);
-  const [geocodedCount, setGeocodedCount] = useState(0);
+  const [, setGeocodedCount] = useState(0);
 
-  // FIX 1: Track blob URLs so we can revoke them on unmount / when images change.
   const blobUrlsRef = useRef<Map<File, string>>(new Map());
 
   const getBlobUrl = useCallback((file: File): string => {
@@ -250,21 +238,17 @@ const OrderImages: React.FC<OrderImagesProps> = ({ goToPreparedList }) => {
     return url;
   }, []);
 
-  // Revoke all tracked blob URLs
   const revokeAllBlobUrls = useCallback(() => {
     blobUrlsRef.current.forEach(url => URL.revokeObjectURL(url));
     blobUrlsRef.current.clear();
   }, []);
 
   useEffect(() => {
-    // Cleanup on unmount
     return () => revokeAllBlobUrls();
   }, [revokeAllBlobUrls]);
 
-
   const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_KEY || '';
   const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN
-
 
   useEffect(() => {
     console.log('🔑 API Keys Status:');
@@ -272,7 +256,6 @@ const OrderImages: React.FC<OrderImagesProps> = ({ goToPreparedList }) => {
     console.log('Mapbox Token loaded:', MAPBOX_TOKEN ? `Yes (starts with: ${MAPBOX_TOKEN.substring(0, 6)}...)` : 'No');
     console.log('📍 Available hostels:', Object.keys(HOSTEL_NORMALIZATION_MAP).length);
   }, []);
-
 
   /* ==================== LOCATION NORMALIZATION ==================== */
   const normalizeLocation = (rawLocation: string): string => {
@@ -282,7 +265,6 @@ const OrderImages: React.FC<OrderImagesProps> = ({ goToPreparedList }) => {
 
     const lowerLocation = rawLocation.toLowerCase().trim();
 
-    // First, check exact matches in normalization map
     for (const [key, normalized] of Object.entries(HOSTEL_NORMALIZATION_MAP)) {
       if (lowerLocation === key || lowerLocation.includes(key)) {
         console.log(`📍 Normalized "${rawLocation}" → "${normalized}"`);
@@ -290,7 +272,6 @@ const OrderImages: React.FC<OrderImagesProps> = ({ goToPreparedList }) => {
       }
     }
 
-    // Try to match common patterns
     if (lowerLocation.includes('complex') && !lowerLocation.includes('brunei')) {
       return `${rawLocation}, Kumasi, Ghana`;
     }
@@ -299,7 +280,6 @@ const OrderImages: React.FC<OrderImagesProps> = ({ goToPreparedList }) => {
       return `${rawLocation}, Kumasi, Ghana`;
     }
 
-    // Return as-is but with Kumasi context
     return `${rawLocation}, Kumasi, Ghana`;
   };
 
@@ -315,19 +295,16 @@ const OrderImages: React.FC<OrderImagesProps> = ({ goToPreparedList }) => {
     const search = searchLocation.toLowerCase();
     const details: string[] = [];
 
-    // Text matching
     if (place.includes(search) || search.includes(place)) {
       score += 0.3;
       details.push('Text match');
     }
 
-    // Kumasi context
     if (place.includes('kumasi')) {
       score += 0.2;
       details.push('In Kumasi');
     }
 
-    // KNUST/Ayeduase context (high priority)
     if (place.includes('knust')) {
       score += 0.25;
       details.push('KNUST area');
@@ -337,35 +314,31 @@ const OrderImages: React.FC<OrderImagesProps> = ({ goToPreparedList }) => {
       details.push('Ayeduase area');
     }
 
-    // Ashanti region context
     if (place.includes('ashanti')) {
       score += 0.15;
       details.push('Ashanti region');
     }
 
-    // Distance calculation using Haversine formula
-    const R = 6371; // Earth's radius in km
+    const R = 6371;
     const dLat = (lat - KNUST_COORDS.lat) * Math.PI / 180;
     const dLng = (lng - KNUST_COORDS.lng) * Math.PI / 180;
     const a = Math.sin(dLat / 2) ** 2 + Math.cos(KNUST_COORDS.lat * Math.PI / 180) * Math.cos(lat * Math.PI / 180) * Math.sin(dLng / 2) ** 2;
     const distance = R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-    // Distance scoring
     if (distance <= 3) {
-      score += 0.3; // Very close to KNUST
+      score += 0.3;
       details.push(`Very close to KNUST (${distance.toFixed(1)}km)`);
     } else if (distance <= 8) {
-      score += 0.2; // Within reasonable delivery range
+      score += 0.2;
       details.push(`Near KNUST (${distance.toFixed(1)}km)`);
     } else if (distance <= 15) {
-      score += 0.1; // Within Kumasi metropolitan area
+      score += 0.1;
       details.push(`In Kumasi area (${distance.toFixed(1)}km)`);
     } else if (distance > 30) {
-      score -= 0.4; // Too far - likely wrong location
+      score -= 0.4;
       details.push(`Too far from KNUST (${distance.toFixed(1)}km)`);
     }
 
-    // Check if this matches any known hostel name
     for (const key of Object.keys(HOSTEL_NORMALIZATION_MAP)) {
       if (place.includes(key)) {
         score += 0.25;
@@ -374,7 +347,6 @@ const OrderImages: React.FC<OrderImagesProps> = ({ goToPreparedList }) => {
       }
     }
 
-    // Cap score at 1.0
     score = Math.min(Math.max(score, 0), 1.0);
 
     return { score, distanceKm: distance, details };
@@ -394,7 +366,6 @@ const OrderImages: React.FC<OrderImagesProps> = ({ goToPreparedList }) => {
     };
 
     const normalizedLocation = normalizeLocation(rawLocation);
-
 
     if (normalizedLocation === 'Pick-up') {
       return {
@@ -420,7 +391,6 @@ const OrderImages: React.FC<OrderImagesProps> = ({ goToPreparedList }) => {
 
     const allResults: any[] = [];
 
-    // Try Google Maps first (most accurate)
     if (GOOGLE_MAPS_API_KEY && GOOGLE_MAPS_API_KEY.length > 10) {
       console.log(`🌐 Attempting Google Maps geocoding...`);
       for (const query of queries) {
@@ -464,7 +434,6 @@ const OrderImages: React.FC<OrderImagesProps> = ({ goToPreparedList }) => {
       console.log(`🌐 Skipping Google Maps (API key missing or invalid)`);
     }
 
-    // Try Mapbox as backup
     if (MAPBOX_TOKEN && MAPBOX_TOKEN.length > 10 && allResults.length === 0) {
       console.log(`🌐 Attempting Mapbox geocoding...`);
       for (const query of queries) {
@@ -497,7 +466,6 @@ const OrderImages: React.FC<OrderImagesProps> = ({ goToPreparedList }) => {
       }
     }
 
-    // Try Nominatim (OpenStreetMap) as last resort
     if (allResults.length === 0) {
       for (const query of queries) {
         try {
@@ -525,7 +493,6 @@ const OrderImages: React.FC<OrderImagesProps> = ({ goToPreparedList }) => {
               });
             }
           }
-          // Rate limiting
           await new Promise(resolve => setTimeout(resolve, 350));
         } catch (error) {
           console.error('Nominatim geocoding error:', error);
@@ -533,14 +500,11 @@ const OrderImages: React.FC<OrderImagesProps> = ({ goToPreparedList }) => {
       }
     }
 
-    // Sort results by score
     allResults.sort((a, b) => b.score - a.score);
 
-    // Return the best result
     if (allResults.length > 0) {
       const best = allResults[0];
 
-      // Determine status based on score
       let status: 'valid' | 'low_confidence' | 'invalid';
       if (best.score >= 0.8) {
         status = 'valid';
@@ -571,7 +535,6 @@ const OrderImages: React.FC<OrderImagesProps> = ({ goToPreparedList }) => {
       };
     }
 
-    // No results found
     console.log(`❌ No geocoding results found for: "${rawLocation}"`);
     return {
       status: 'invalid',
@@ -584,8 +547,6 @@ const splitIntoOrders = (text: string): string[] => {
     const orders: string[] = [];
     const raw = text.split('\n').map(sanitizeOcrLine);
 
-    // Primary split using blank lines because WhatsApp note orders are usually
-    // separated by visible spacing/indentation.
     const chunks: string[][] = [];
     let currentChunk: string[] = [];
     for (const line of raw) {
@@ -615,7 +576,6 @@ const splitIntoOrders = (text: string): string[] => {
         }
       }
 
-      // Strong fallback: derive anchors from phone lines, since each order must have a phone.
       if (phoneIndexes.length > 0) {
         const phoneAnchors = phoneIndexes.map(phoneIndex => {
           const prevIndex = phoneIndex - 1;
@@ -684,8 +644,6 @@ const splitIntoOrders = (text: string): string[] => {
     return orders;
   };
 
-  // FIX 2 & 6: Removed the dead `extractProductsAndTotal` function entirely.
-  // `parseOrderBlock` now uses the shared `parseQuantity` helper for consistency.
   const parseOrderBlock = (text: string): Omit<ExtractedOrder, 'image' | 'rawText'> => {
     const lines = normalizeOcrLines(text);
 
@@ -714,8 +672,6 @@ const splitIntoOrders = (text: string): string[] => {
       }
     }
 
-    // If the ✅ line was actually a product line, the name is usually the line
-    // right before the phone number.
     if (!name && phoneIndex > 0 && isPossibleNameLine(lines[phoneIndex - 1])) {
       name = normalizeNameCandidate(lines[phoneIndex - 1]);
     }
@@ -810,10 +766,8 @@ const splitIntoOrders = (text: string): string[] => {
 
   /* ==================== MAIN PROCESSING ==================== */
   const process = async () => {
-    // FIX 8: Early return guard — nothing to do if no images are loaded.
     if (images.length === 0) return;
 
-    // FIX 4: Reset all order state at the top so a re-run starts clean.
     setOrders([]);
     geocodedCountRef.current = 0;
     setGeocodedCount(0);
@@ -825,7 +779,6 @@ const splitIntoOrders = (text: string): string[] => {
 
     const allExtracted: ExtractedOrder[] = [];
 
-    // 1. OCR Extraction
     for (let i = 0; i < images.length; i++) {
       setProgress({ current: i + 1, total: images.length });
 
@@ -855,13 +808,9 @@ const splitIntoOrders = (text: string): string[] => {
     setOrders(allExtracted);
     setLoading(false);
 
-    // 2. Location Geocoding
     if (allExtracted.length > 0) {
       setProcessingStage('geocoding');
       setValidatingLocations(true);
-      // FIX 7: Work on a mutable local copy. We commit the full snapshot to React
-      // state after each geocode so the UI updates incrementally, but there is no
-      // stale-closure risk because we never re-read `orders` state inside the loop.
       const updatedOrders = [...allExtracted];
 
       for (let i = 0; i < updatedOrders.length; i++) {
@@ -880,14 +829,11 @@ const splitIntoOrders = (text: string): string[] => {
             geocodingProvider: geocodeResult.provider
           };
 
-          // FIX 3: Tick the lightweight counter instead of updating a full object map.
           geocodedCountRef.current += 1;
           setGeocodedCount(geocodedCountRef.current);
 
-          // Commit the current snapshot so the card updates on screen immediately.
           setOrders([...updatedOrders]);
 
-          // Delay to prevent rate limiting
           await new Promise(resolve => setTimeout(resolve, 300));
         }
       }
@@ -900,26 +846,6 @@ const splitIntoOrders = (text: string): string[] => {
   };
 
   /* ==================== UI COMPONENTS ==================== */
-  const LocationBadge = ({ status, provider }: { status?: string; provider?: string }) => {
-    if (!status) return null;
-
-    const config = {
-      valid: { bg: 'bg-green-100', text: 'text-green-700', icon: '✓', label: 'Valid' },
-      low_confidence: { bg: 'bg-yellow-100', text: 'text-yellow-700', icon: '⚠', label: 'Low Confidence' },
-      invalid: { bg: 'bg-red-100', text: 'text-red-700', icon: '✗', label: 'Invalid' }
-    }[status] || { bg: 'bg-gray-100', text: 'text-gray-700', icon: '?', label: 'Unknown' };
-
-    return (
-      <div className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium">
-        <span className={`${config.bg} ${config.text} px-2 py-1 rounded-full`}>
-          {config.icon} {config.label}
-        </span>
-        {provider && (
-          <span className="text-gray-500 text-xs ml-1">({provider})</span>
-        )}
-      </div>
-    );
-  };
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files ? Array.from(e.target.files) : [];
@@ -927,7 +853,6 @@ const splitIntoOrders = (text: string): string[] => {
   };
 
   const removeImage = (index: number) => {
-    // FIX 1: Revoke the blob URL for the image being removed before dropping it.
     const file = images[index];
     const url = blobUrlsRef.current.get(file);
     if (url) {
@@ -941,121 +866,92 @@ const splitIntoOrders = (text: string): string[] => {
     goToPreparedList(orders);
   };
 
-  const handleViewAllOnMap = () => {
-    const validOrders = orders.filter(o => o.latitude && o.longitude);
-    if (validOrders.length === 0) {
-      alert('No valid locations to display on map');
-      return;
-    }
-
-    const origin = `${validOrders[0].latitude},${validOrders[0].longitude}`;
-    const destination = `${validOrders[validOrders.length - 1].latitude},${validOrders[validOrders.length - 1].longitude}`;
-
-    let waypoints = '';
-    if (validOrders.length > 2) {
-      const waypointCoords = validOrders.slice(1, -1).map(o => `${o.latitude},${o.longitude}`).join('|');
-      waypoints = `&waypoints=${waypointCoords}`;
-    }
-
-    window.open(`https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${destination}${waypoints}&travelmode=driving`, '_blank');
-  };
 
   return (
-    <main className="flex w-[1132px] flex-col gap-10 mx-auto mt-8">
+    <main className="flex w-full flex-col gap-4 mx-auto px-4 sm:px-6 md:px-8">
       {/* Header */}
-      <div className="flex items-center justify-between p-6 bg-white rounded-xl shadow-sm border">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900">Upload Orders</h1>
-          <p className="text-gray-600 mt-1">
-            {orders.length} orders from {images.length} {images.length === 1 ? 'image' : 'images'}
-            {/* FIX 3: Use the lightweight geocodedCount state instead of Object.keys on a large map. */}
-            {validatingLocations && (
-              <span className="text-blue-600 ml-2 animate-pulse">
-                🔍 Validating locations ({geocodedCount}/{orders.length})
-              </span>
-            )}
-          </p>
-          <div className="flex gap-2 mt-2">
-            <span className="text-xs px-2 py-1 bg-blue-100 text-blue-800 rounded-full">
-              {Object.keys(HOSTEL_NORMALIZATION_MAP).length} known locations
-            </span>
-            <span className="text-xs px-2 py-1 bg-green-100 text-green-800 rounded-full">
-              {MENU_PRODUCTS.length} products
-            </span>
-          </div>
+      <div className='flex items-center justify-between w-full max-w-7xl mx-auto mt-4 sm:mt-6 md:mt-8'>
+        <div className="flex items-center cursor-pointer">
+          <img
+            src="/logo.png"
+            alt="Logo"
+            className="h-4 sm:h-5 w-2.5 sm:w-3"
+          />
+          <span className="text-red-600 text-base sm:text-lg font-bold">B</span>
+          <span className="text-black/50 text-base sm:text-lg font-bold">ites.</span>
         </div>
 
-        <div className="flex gap-3">
-          {orders.filter(o => o.latitude && o.longitude).length > 0 && (
-            <button
-              onClick={handleViewAllOnMap}
-              className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2.5 rounded-lg font-medium"
-            >
-              <span>🗺️</span>
-              View Route ({orders.filter(o => o.latitude).length})
-            </button>
-          )}
-          <div className="w-48">
-            <PrimaryButton
-              title="Prepare Order List"
-              onClick={handlePrepareOrderList}
-              disabled={orders.length === 0 || loading || validatingLocations}
-            />
-          </div>
+        <div className="h-5 sm:h-6 px-1 sm:px-1.5 py-1.5 sm:py-2.5 bg-orange-400 rounded-[50px] flex items-center justify-center">
+          <div className="text-center text-white text-xs">R 👩🏽‍🍳</div>
         </div>
       </div>
 
-      {/* Image Upload Section */}
-      <section className="grid grid-cols-6 gap-4">
-        <label className="flex flex-col items-center justify-center w-40 h-40 border-2 border-dashed border-gray-300 rounded-xl cursor-pointer hover:border-blue-400 transition-colors bg-gray-50">
-          <input type="file" multiple accept="image/*" className="hidden" onChange={handleImageUpload} />
-          <svg className="w-10 h-10 mb-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-          </svg>
-          <span className="text-sm text-gray-600 font-medium">Upload Images</span>
-        </label>
+      {/* Image Upload Section - Responsive Grid */}
+      <section className="w-full max-w-7xl mx-auto">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 sm:gap-4">
+          {/* Upload Button */}
+          <label className="flex flex-col items-center justify-center aspect-square w-full border-2 border-dashed border-gray-300 rounded-xl cursor-pointer hover:border-blue-400 transition-colors bg-gray-50 p-2">
+            <input type="file" multiple accept="image/*" className="hidden" onChange={handleImageUpload} />
+            <svg className="w-8 h-8 sm:w-10 sm:h-10 mb-1 sm:mb-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+            </svg>
+            <span className="text-xs sm:text-sm text-gray-600 font-medium text-center">Upload</span>
+          </label>
 
-        {/* FIX 1: Use the memoised getBlobUrl helper instead of calling URL.createObjectURL inline on every render. */}
-        {images.map((file, index) => (
-          <div key={index} className="relative w-40 h-40 group">
-            <img
-              src={getBlobUrl(file)}
-              alt={`Order ${index + 1}`}
-              className="w-full h-full object-cover rounded-xl border"
-            />
-            <button
-              onClick={() => removeImage(index)}
-              className="absolute top-2 right-2 bg-black/80 text-white rounded-full w-6 h-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-            >
-              ×
-            </button>
-          </div>
-        ))}
+          {/* Uploaded Images */}
+          {images.map((file, index) => (
+            <div key={index} className="relative aspect-square w-full group">
+              <img
+                src={getBlobUrl(file)}
+                alt={`Order ${index + 1}`}
+                className="w-full h-full object-cover rounded-xl border"
+              />
+              <button
+                onClick={() => removeImage(index)}
+                className="absolute top-1 right-1 bg-black/80 text-white rounded-full w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity text-sm"
+              >
+                ×
+              </button>
+            </div>
+          ))}
+        </div>
       </section>
 
-      {/* Process Button */}
-      {images.length > 0 && orders.length === 0 && !loading && (
-        <div className="flex justify-center">
+      {/* Action Buttons - Extract and Go to Prepared List */}
+      <div className="flex flex-col sm:flex-row gap-3 justify-center w-full max-w-7xl mx-auto mt-4">
+        {/* Process Button */}
+        {images.length > 0 && orders.length === 0 && !loading && (
           <button
             onClick={process}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-10 py-3 rounded-lg text-lg font-medium"
+            className="bg-orange-400 hover:bg-orange-700 text-white px-6 sm:px-10 py-2.5 sm:py-3 rounded-full text-base sm:text-lg font-medium"
           >
             Extract Orders from {images.length} {images.length === 1 ? 'Image' : 'Images'}
           </button>
-        </div>
-      )}
+        )}
+
+        {/* Go to Prepared List Button - Show when orders are extracted */}
+        {orders.length > 0 && (
+          <button
+            onClick={handlePrepareOrderList}
+            className="bg-orange-400 hover:bg-orange-700 text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-full text-base sm:text-lg font-medium flex items-center justify-center gap-2"
+          >
+     
+            View Prepared List 
+          </button>
+        )}
+      </div>
 
       {/* Loading State */}
       {loading && (
-        <div className="flex flex-col items-center justify-center py-12">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mb-4"></div>
-          <p className="text-gray-700 font-medium">
+        <div className="flex flex-col items-center justify-center py-8 sm:py-12 w-full max-w-7xl mx-auto">
+          <div className="animate-spin rounded-full h-10 w-10 sm:h-12 sm:w-12 border-b-2 border-blue-600 mb-4"></div>
+          <p className="text-gray-700 font-medium text-sm sm:text-base text-center px-4">
             {processingStage === 'ocr'
               ? `Extracting text from image ${progress.current} of ${progress.total} (${ocrProgress}%)...`
               : `Processing image ${progress.current} of ${progress.total}...`}
           </p>
           {progress.current > 0 && progress.total > 0 && (
-            <div className="w-64 bg-gray-200 rounded-full h-2 mt-4">
+            <div className="w-48 sm:w-64 bg-gray-200 rounded-full h-2 mt-4">
               <div
                 className="bg-blue-600 h-2 rounded-full transition-all duration-300"
                 style={{ width: `${(progress.current / progress.total) * 100}%` }}
@@ -1066,80 +962,105 @@ const splitIntoOrders = (text: string): string[] => {
       )}
 
       {/* Extracted Orders */}
-      {orders.length > 0 && (
-        <section className="bg-white rounded-xl shadow-sm border p-6">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-bold text-gray-900">Extracted Orders ({orders.length})</h2>
+      {/* {orders.length > 0 && (
+        <section className="bg-white rounded-xl shadow-sm border p-4 sm:p-6 w-full max-w-7xl mx-auto">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0 mb-4 sm:mb-6">
+            <h2 className="text-lg sm:text-xl font-bold text-gray-900">Extracted Orders ({orders.length})</h2>
             <div className="flex gap-2">
-              <span className="px-3 py-1 bg-green-100 text-green-800 text-sm rounded-full">
+              <span className="px-2 sm:px-3 py-1 bg-green-100 text-green-800 text-xs sm:text-sm rounded-full">
                 {orders.filter(o => o.locationStatus === 'valid').length} Valid
               </span>
-              <span className="px-3 py-1 bg-yellow-100 text-yellow-800 text-sm rounded-full">
+              <span className="px-2 sm:px-3 py-1 bg-yellow-100 text-yellow-800 text-xs sm:text-sm rounded-full">
                 {orders.filter(o => o.locationStatus === 'low_confidence').length} Low Confidence
               </span>
             </div>
           </div>
 
-          <div className="space-y-4 max-h-[600px] overflow-y-auto pr-2">
+          <div className="space-y-4 max-h-[500px] sm:max-h-[600px] overflow-y-auto pr-1 sm:pr-2">
             {orders.map((order, index) => (
-              <div key={index} className="border border-gray-200 rounded-lg p-5 hover:border-blue-300 transition-colors">
-                <div className="flex justify-between items-start mb-3">
+              <div key={index} className="border border-gray-200 rounded-lg p-4 sm:p-5 hover:border-blue-300 transition-colors">
+                <div className="flex flex-col sm:flex-row justify-between items-start gap-3 sm:gap-0 mb-3">
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 font-semibold">
+                    <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 font-semibold text-sm sm:text-base">
                       {index + 1}
                     </div>
                     <div>
-                      <h3 className="font-bold text-lg">{order.name}</h3>
-                      <p className="text-gray-600 font-mono text-sm">{order.phone}</p>
+                      <h3 className="font-bold text-base sm:text-lg">{order.name}</h3>
+                      <p className="text-gray-600 font-mono text-xs sm:text-sm">{order.phone}</p>
                     </div>
                   </div>
                   <LocationBadge status={order.locationStatus} provider={order.geocodingProvider} />
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                   <div>
-                    <p className="text-sm text-gray-500 mb-1">Products</p>
-                    <p className="font-medium">{order.product}</p>
+                    <p className="text-xs sm:text-sm text-gray-500 mb-1">Products</p>
+                    <p className="font-medium text-sm sm:text-base">{order.product}</p>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-500 mb-1">Total Amount</p>
-                    <p className="font-bold text-lg">₵{order.amount || '0.00'}</p>
+                    <p className="text-xs sm:text-sm text-gray-500 mb-1">Total Amount</p>
+                    <p className="font-bold text-base sm:text-lg">₵{order.amount || '0.00'}</p>
                   </div>
-                  <div>
-                    <p className="text-sm text-gray-500 mb-1">Delivery Location</p>
-                    <div className="flex items-center gap-2">
-                      <p className="font-medium">{order.location}</p>
+                  <div className="sm:col-span-2">
+                    <p className="text-xs sm:text-sm text-gray-500 mb-1">Delivery Location</p>
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-1 sm:gap-2">
+                      <p className="font-medium text-sm sm:text-base">{order.location}</p>
                       {order.resolvedLocationName && order.resolvedLocationName !== order.location && (
                         <span className="text-xs text-gray-500">→ {order.resolvedLocationName}</span>
                       )}
                     </div>
                   </div>
-                  <div>
-                    <p className="text-sm text-gray-500 mb-1">Coordinates</p>
+                  <div className="sm:col-span-2">
+                    <p className="text-xs sm:text-sm text-gray-500 mb-1">Coordinates</p>
                     {order.latitude && order.longitude ? (
-                      <div className="flex items-center gap-2">
-                        <p className="font-mono text-sm">
+                      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-1 sm:gap-2">
+                        <p className="font-mono text-xs sm:text-sm break-all">
                           {order.latitude.toFixed(6)}, {order.longitude.toFixed(6)}
                         </p>
                         <a
                           href={`https://www.google.com/maps/search/?api=1&query=${order.latitude},${order.longitude}`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-blue-600 hover:text-blue-800 text-sm"
+                          className="text-blue-600 hover:text-blue-800 text-xs sm:text-sm"
                         >
                           View Map ↗
                         </a>
                       </div>
                     ) : (
-                      <p className="text-gray-400 text-sm">Not geocoded</p>
+                      <p className="text-gray-400 text-xs sm:text-sm">Not geocoded</p>
                     )}
                   </div>
                 </div>
               </div>
             ))}
           </div>
+
+   
+          <div className="flex flex-col sm:flex-row gap-3 justify-center mt-6">
+            <button
+              onClick={handlePrepareOrderList}
+              className="bg-green-600 hover:bg-green-700 text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-medium flex items-center justify-center gap-2"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+              </svg>
+              Prepare Order List ({orders.length})
+            </button>
+
+            {orders.filter(o => o.latitude && o.longitude).length > 0 && (
+              <button
+                onClick={handleViewAllOnMap}
+                className="bg-blue-600 hover:bg-blue-700 text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-medium flex items-center justify-center gap-2"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+                </svg>
+                View Route ({orders.filter(o => o.latitude).length})
+              </button>
+            )}
+          </div>
         </section>
-      )}
+      )} */}
     </main>
   );
 };

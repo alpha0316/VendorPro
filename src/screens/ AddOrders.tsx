@@ -25,7 +25,7 @@ function App({ goToOrderImages = () => { }, goToAddOrders = () => { }, goToCopyA
   return (
     <>
       <main style={{
-      marginInline: 16,
+      // marginInline: 12,
       display: 'flex',
       flexDirection: 'column',
       gap: 120
@@ -51,8 +51,8 @@ function App({ goToOrderImages = () => { }, goToAddOrders = () => { }, goToCopyA
         </div>
 
         <section className='flex flex-col items-center justify-center gap-12'>
-          <main>
-            <figure className="relative left-44 z-50 px-4 py-6 bg-gray-100 rounded-2xl  outline-[3px] outline-offset-[-3px] outline-white inline-flex flex-col justify-start items-center gap-3.5">
+          <main className='relative w-full'>
+            <figure className="relative left-17 sm:left-40 z-50 px-4 py-6 bg-gray-100 rounded-2xl  outline-[3px] outline-offset-[-3px] outline-white inline-flex flex-col justify-start items-center gap-3.5">
               <div className="w-16 h-16 relative bg-green-500 rounded-[100px] overflow-hidden">
                 <div className="w-24 left-[-17.12px] top-[10.20px] absolute text-center justify-start text-black text-5xl font-bold">🧕🏽</div>
               </div>
@@ -75,12 +75,12 @@ function App({ goToOrderImages = () => { }, goToAddOrders = () => { }, goToCopyA
               </div>
 
             </figure>
-            <figure className="relative left-17 z-10 bottom-7 rotate-[12.75deg]  px-4 py-6 bg-gray-100 rounded-2xl  outline-[3px] outline-offset-[-3px] outline-white inline-flex flex-col justify-start items-center gap-3.5">
+            <figure className="relative right-10 sm:left-15 z-10 bottom-6 rotate-[12.75deg]  px-4 py-6 bg-gray-100 rounded-2xl  outline-[3px] outline-offset-[-3px] outline-white inline-flex flex-col justify-start items-center gap-3.5">
               <div className="w-16 h-16 relative bg-[#D2AA19] rounded-[100px] overflow-hidden">
                 <div className="w-24 left-[-17.12px] top-[10.20px] absolute text-center justify-start text-black text-5xl font-bold"></div>
               </div>
 
-              <p className="self-stretch text-center justify-start text-black text-sm font-bold">Suad M.🧕🏽</p>
+              <p className="self-stretch text-center justify-start text-black text-sm font-bold">Esi M.🧕🏽</p>
 
               <div className="self-stretch inline-flex justify-center items-center gap-2.5">
                 <div className="flex justify-start items-center gap-0.5">
@@ -98,12 +98,12 @@ function App({ goToOrderImages = () => { }, goToAddOrders = () => { }, goToCopyA
               </div>
 
             </figure>
-            <figure className="relative right-56 bottom-17 rotate-[-15.79deg] px-4 py-6 bg-gray-100 rounded-2xl  outline-[3px] outline-offset-[-3px] outline-white inline-flex flex-col justify-start items-center gap-3.5">
+            <figure className="relative sm:right-50 right-18 sm:bottom-18 bottom-68 rotate-[-15.79deg] px-4 py-6 bg-gray-100 rounded-2xl  outline-[3px] outline-offset-[-3px] outline-white inline-flex flex-col justify-start items-center gap-3.5">
               <div className="w-16 h-16 relative bg-[#F6CCCC] rounded-[100px] overflow-hidden">
                 <div className="w-24 left-[-17.12px] top-[10.20px] absolute text-center justify-start text-black text-5xl font-bold"></div>
               </div>
 
-              <p className="self-stretch text-center justify-start text-black text-sm font-bold">Suad M.🧕🏽</p>
+              <p className="self-stretch text-center justify-start text-black text-sm font-bold">Esi M.🧕🏽</p>
 
               <div className="self-stretch inline-flex justify-center items-center gap-2.5">
                 <div className="flex justify-start items-center gap-0.5">
@@ -122,8 +122,7 @@ function App({ goToOrderImages = () => { }, goToAddOrders = () => { }, goToCopyA
 
             </figure>
           </main>
-
-          <section className='flex flex-col items-center justify-center gap-6'>
+          <section className='flex flex-col items-center justify-center gap-6 bottom-56 sm:bottom-0 relative z-10'>
             <div className="w-60 inline-flex flex-col justify-start items-center gap-1.5">
               <p className="self-stretch text-center justify-start text-black text-3xl font-medium ">Hiii Akosuaa ✨👩🏽‍🍳</p>
               <p className="self-stretch text-center justify-start text-black/50 text-xs font-medium">You have not uploaded any order for this week yet 💁🏽‍♀️</p>
@@ -136,8 +135,8 @@ function App({ goToOrderImages = () => { }, goToAddOrders = () => { }, goToCopyA
 
         {/* Modal */}
         {isModalOpen && (
-          <div className="fixed inset-0 bg-black/50 flex items-end justify-center z-50 pb-24" onClick={closeModal}>
-            <div className="bg-white rounded-3xl p-4 w-[550px] max-w-[90vw] flex flex-col gap-4 mb-4" onClick={(e) => e.stopPropagation()}>
+          <div className="fixed inset-0 bg-black/50 flex items-end justify-center z-50 pb-18 sm:pb-20" onClick={closeModal}>
+            <div className="bg-white rounded-3xl p-4 w-[550px] max-w-[95vw] flex flex-col gap-4 mb-4" onClick={(e) => e.stopPropagation()}>
 
               <section
                 onClick={() => {
