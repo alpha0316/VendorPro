@@ -1,6 +1,5 @@
 
 import './../App.css'
-import { useState } from 'react';
 
 import RevenueChart from '../components/ExpenseGraph';
 
@@ -8,20 +7,7 @@ interface AppProps {
   goToAddOrders: () => void;
 }
 
-interface DropPoint {
-  name: string;
-  latitude: number;
-  longitude: number;
-}
 
-interface Location {
-  id: string;
-  name: string;
-  description: string;
-  latitude: number;
-  longitude: number;
-  dropPoints: DropPoint[];
-}
 
 function App({ goToAddOrders }: AppProps) {
 
@@ -117,7 +103,7 @@ function App({ goToAddOrders }: AppProps) {
                 </div>
                 <div className="flex flex-col justify-start items-start gap-2">
                   <div className="justify-start text-black/80 text-2xl font-semibold">112</div>
-                  <div className="justify-start"><span class="text-black/80 text-sm font-normal">19 Orders </span><span class="text-black/40 text-sm font-normal "> Picked Up By Customers</span></div>
+                  <div className="justify-start"><span className="text-black/80 text-sm font-normal">19 Orders </span><span className="text-black/40 text-sm font-normal "> Picked Up By Customers</span></div>
                 </div>
               </div>
             </figure>

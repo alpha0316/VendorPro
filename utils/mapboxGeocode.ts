@@ -1,4 +1,12 @@
+/// <reference types="vite/client" />
 const MAPBOX_KEY = import.meta.env.VITE_MAPBOX_KEY;
+
+type GeoResult = {
+  lat: number;
+  lng: number;
+  formattedAddress: string;
+  source: string;
+};
 
 export const mapboxGeocode = async (
   query: string

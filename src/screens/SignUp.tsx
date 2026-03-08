@@ -1,5 +1,4 @@
-import { useState } from 'react'
-import PrimaryButton from '../Components/PrimaryButton'
+import PrimaryButton from '../components/PrimaryButton'
 import { useNavigate } from 'react-router-dom'
 
 function SignUp() {
