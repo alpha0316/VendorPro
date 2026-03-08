@@ -31,7 +31,7 @@ function App({ goToOrderImages = () => { }, goToAddOrders = () => { }, goToCopyA
       gap: 120
     }}>
 
-        <div className='flex items-center justify-between w-full px-4 sm:px-6 md:px-8 lg:w-[1440px] lg:mx-auto mt-4 sm:mt-6 md:mt-8'>
+        <div className='flex items-center justify-between w-full px-4 sm:px-6 md:px-8 lg:w-360 lg:mx-auto mt-4 sm:mt-6 md:mt-8'>
           <div
             onClick={goToAddOrders}
             className="flex items-center cursor-pointer"
@@ -52,7 +52,7 @@ function App({ goToOrderImages = () => { }, goToAddOrders = () => { }, goToCopyA
 
         <section className='flex flex-col items-center justify-center gap-12'>
           <main className='relative w-full'>
-            <figure className="relative left-17 sm:left-40 z-50 px-4 py-6 bg-gray-100 rounded-2xl  outline-[3px] outline-offset-[-3px] outline-white inline-flex flex-col justify-start items-center gap-3.5">
+            <figure className="relative left-20 sm:left-40 z-50 px-4 py-6 bg-gray-100 rounded-2xl  outline-[3px] outline-offset-[-3px] outline-white inline-flex flex-col justify-start items-center gap-3.5">
               <div className="w-16 h-16 relative bg-green-500 rounded-[100px] overflow-hidden">
                 <div className="w-24 left-[-17.12px] top-[10.20px] absolute text-center justify-start text-black text-5xl font-bold">🧕🏽</div>
               </div>
@@ -75,7 +75,7 @@ function App({ goToOrderImages = () => { }, goToAddOrders = () => { }, goToCopyA
               </div>
 
             </figure>
-            <figure className="relative right-10 sm:left-15 z-10 bottom-6 rotate-[12.75deg]  px-4 py-6 bg-gray-100 rounded-2xl  outline-[3px] outline-offset-[-3px] outline-white inline-flex flex-col justify-start items-center gap-3.5">
+            <figure className="relative right-8 sm:left-15 z-10 bottom-6 rotate-[12.75deg]  px-4 py-6 bg-gray-100 rounded-2xl  outline-[3px] outline-offset-[-3px] outline-white inline-flex flex-col justify-start items-center gap-3.5">
               <div className="w-16 h-16 relative bg-[#D2AA19] rounded-[100px] overflow-hidden">
                 <div className="w-24 left-[-17.12px] top-[10.20px] absolute text-center justify-start text-black text-5xl font-bold"></div>
               </div>
@@ -136,7 +136,7 @@ function App({ goToOrderImages = () => { }, goToAddOrders = () => { }, goToCopyA
         {/* Modal */}
         {isModalOpen && (
           <div className="fixed inset-0 bg-black/50 flex items-end justify-center z-50 pb-18 sm:pb-20" onClick={closeModal}>
-            <div className="bg-white rounded-3xl p-4 w-[550px] max-w-[95vw] flex flex-col gap-4 mb-4" onClick={(e) => e.stopPropagation()}>
+            <div className="bg-white rounded-3xl p-4 w-137.5 max-w-[95vw] flex flex-col gap-4 mb-4" onClick={(e) => e.stopPropagation()}>
 
               <section
                 onClick={() => {

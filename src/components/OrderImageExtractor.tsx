@@ -95,7 +95,7 @@ function UploadOrders() {
   }
 
   return (
-    <main className="flex w-[1132px] flex-col gap-12 mx-auto mt-8">
+    <main className="flex w-283 flex-col gap-12 mx-auto mt-8">
       {/* HEADER */}
       <div className="flex items-center justify-between">
         <div
@@ -106,7 +106,6 @@ function UploadOrders() {
           <span className="text-red-600 font-bold">B</span>
           <span className="text-black/50 font-bold">ites.</span>
         </div>
-
         <div className="h-6 px-3 bg-orange-400 rounded-full flex items-center text-white text-xs">
           R 👩🏽‍🍳
         </div>

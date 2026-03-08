@@ -301,7 +301,7 @@ const StickerCard: React.FC<{
                 e.stopPropagation();
                 onToggle();
               }}
-              className="w-4 h-4 rounded accent-orange-400 cursor-pointer flex-shrink-0"
+              className="w-4 h-4 rounded accent-orange-400 cursor-pointer shrink-0"
               onClick={(e) => e.stopPropagation()}
             />
           </div>
@@ -358,7 +358,7 @@ const StickerCard: React.FC<{
   // Desktop grid layout
   return (
     <article
-      className="relative overflow-hidden p-3 cursor-pointer transition-transform hover:scale-[1.02] min-h-[124px]"
+      className="relative overflow-hidden p-3 cursor-pointer transition-transform hover:scale-[1.02] min-h-31"
       onClick={onToggle}
     >
       <StickerBg />

@@ -464,11 +464,11 @@ function App({ goToAddOrders }: AppProps) {
                   type="checkbox"
                   checked={isChecked}
                   onChange={e => onCheck?.(order.id, e.target.checked)}
-                  className="w-4 h-4 rounded accent-orange-400 cursor-pointer flex-shrink-0"
+                  className="w-4 h-4 rounded accent-orange-400 cursor-pointer shrink-0"
                   onClick={e => e.stopPropagation()}
                 />
               ) : (
-                <div className="w-5 h-5 rounded-full bg-black/10 flex-shrink-0" />
+                <div className="w-5 h-5 rounded-full bg-black/10 shrink-0" />
               )}
             </div>
 
@@ -537,7 +537,7 @@ function App({ goToAddOrders }: AppProps) {
     return (
       <article
         key={orderKey}
-        className={`relative overflow-hidden p-3 cursor-grab active:cursor-grabbing transition-transform ${productsExpanded ? 'min-h-[176px]' : 'min-h-[124px]'} ${draggable && draggedOrderId === order.id ? 'opacity-50' : ''}`}
+        className={`relative overflow-hidden p-3 cursor-grab active:cursor-grabbing transition-transform ${productsExpanded ? 'min-h-44' : 'min-h-31'} ${draggable && draggedOrderId === order.id ? 'opacity-50' : ''}`}
         draggable={draggable}
         onDragStart={draggable ? () => handleDragStart(order.id) : undefined}
         onDragEnd={draggable ? handleDragEnd : undefined}
@@ -584,7 +584,7 @@ function App({ goToAddOrders }: AppProps) {
     <>
       <main className='flex flex-col items-center w-full gap-1.5'>
 
-        <div className='flex items-center justify-between w-full px-4 sm:px-6 md:px-8 lg:w-[1440px] lg:mx-auto mt-4 sm:mt-6 md:mt-8'>
+        <div className='flex items-center justify-between w-full px-4 sm:px-6 md:px-8 lg:w-360 lg:mx-auto mt-4 sm:mt-6 md:mt-8'>
           <div
             onClick={goToAddOrders}
             className="flex items-center cursor-pointer"
@@ -630,7 +630,7 @@ function App({ goToAddOrders }: AppProps) {
                       <span className="text-xs text-black/50">{kanbanOrdersByStatus[status].length}</span>
                     </div>
 
-                    <div className="flex flex-col gap-2 max-h-[540px] overflow-y-auto">
+                    <div className="flex flex-col gap-2 max-h-135 overflow-y-auto">
                       {kanbanOrdersByStatus[status].map(order =>
                         renderStickerCard(order, { draggable: true })
                       )}

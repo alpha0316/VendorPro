@@ -16,7 +16,7 @@ function App({ goToAddOrders }: AppProps) {
     <>
       <main className='flex flex-col items-center w-full '>
         <section className='flex flex-col w-full '>
-          <div className='flex items-center justify-between w-[1132px] mt-8 '>
+          <div className='flex items-center justify-between w-283 mt-8 '>
             <div
               onClick={goToAddOrders}
               className="justify-center items-center flex-row hidden sm:flex">

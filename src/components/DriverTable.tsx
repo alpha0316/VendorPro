@@ -148,7 +148,7 @@ const CustomTable: React.FC<CustomTableProps> = ({
     };
 
     return (
-      <div className={`pl-1.5 pr-2 py-0.5 rounded-2xl  outline-1 outline-offset-[-1px] inline-flex justify-start items-center gap-1 ${colorClasses[statusColor]}`}>
+      <div className={`pl-1.5 pr-2 py-0.5 rounded-2xl  outline-1 -outline-offset-1 inline-flex justify-start items-center gap-1 ${colorClasses[statusColor]}`}>
         <div className="w-2 h-2 rounded-full bg-current"></div>
         <div className="text-center justify-start text-xs font-medium leading-none">{status}</div>
       </div>
@@ -180,12 +180,12 @@ const CustomTable: React.FC<CustomTableProps> = ({
   };
 
   return (
-    <main className='w-[1123px] m-10 flex flex-col items-start justify-start rounded-xl border border-black/10 bg-white shadow-sm'>
+    <main className='w-280.75 m-10 flex flex-col items-start justify-start rounded-xl border border-black/10 bg-white shadow-sm'>
       {/* Header */}
       <header className='px-6 py-5 items-center justify-between max-w-full border-b border-black/10 flex w-full'>
         <div className='flex items-center justify-center gap-2'>
           <p className='text-gray-900 text-lg font-semibold'>{title}</p>
-          <div className='text-violet-700 text-sm font-medium px-2 py-0.5 bg-purple-50 rounded-2xl  outline-1 outline-offset-[-1px] outline-gray-200'>
+          <div className='text-violet-700 text-sm font-medium px-2 py-0.5 bg-purple-50 rounded-2xl  outline-1 -outline-offset-1 outline-gray-200'>
             {drivers.length} {title}
           </div>
         </div>

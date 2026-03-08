@@ -12,7 +12,7 @@ function App({goToAddOrders}: AppProps) {
 
   return (
     <>
-      <main className="flex w-[1132px] flex-col gap-12">
+      <main className="flex w-283 flex-col gap-12">
         {/* HEADER */}
         <div className="flex items-center justify-between w-full max-full mx-auto mt-8">
           <div
@@ -31,7 +31,7 @@ function App({goToAddOrders}: AppProps) {
 
         {/* NAV */}
         <section className="flex flex-col items-center justify-center gap-4">
-          <nav className="flex w-full items-center justify-between max-w-[632px]">
+          <nav className="flex w-full items-center justify-between max-w-158">
             <div className="flex gap-3 items-center">
               <div
                 style={{
@@ -68,7 +68,7 @@ function App({goToAddOrders}: AppProps) {
           </nav>
 
           <main className='flex flex-col items-start justify-center gap-4'>
-              <div className="w-[632px] inline-flex flex-col justify-start items-start gap-3.5">
+              <div className="w-158 inline-flex flex-col justify-start items-start gap-3.5">
                   <p className="self-stretch justify-start text-black text-3xl font-bold text-left">Paste Your Orders — We’ll Handle the Rest ✨</p>
                   <p className="justify-start text-black/50 text-sm font-normal text-left">Simply paste your raw order messages from WhatsApp, Telegram, or anywhere else.  Our system will automatically extract names, numbers, and order details — ready for review</p>
               </div>
