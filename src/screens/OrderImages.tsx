@@ -999,7 +999,7 @@ const splitIntoOrders = (text: string): string[] => {
                   </div>
                   <div>
                     <p className="text-xs sm:text-sm text-gray-500 mb-1">Total Amount</p>
-                    <p className="font-bold text-base sm:text-lg">₵{order.amount || '0.00'}</p>
+                    <p className="font-bold text-base sm:text-lg">GHC{order.amount || '0.00'}</p>
                   </div>
                   <div className="sm:col-span-2">
                     <p className="text-xs sm:text-sm text-gray-500 mb-1">Delivery Location</p>

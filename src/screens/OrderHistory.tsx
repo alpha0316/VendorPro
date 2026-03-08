@@ -40,7 +40,7 @@ const parseProductLine = (line: string): { name: string; qty: number; price: str
   const matched = MENU_PRODUCTS.find(p =>
     p.keywords.some(k => name.toLowerCase().includes(k.toLowerCase()))
   );
-  const price = matched ? `₵${(matched.price * qty).toFixed(2)}` : '';
+  const price = matched ? `GHC${(matched.price * qty).toFixed(2)}` : '';
   return { name, qty, price };
 };
 
@@ -80,7 +80,7 @@ const sampleOrders: Order[] = [
     phone: "055 414 4611",
     location: "NYA",
     item: "Shawarma",
-    amount: "₵ 65",
+    amount: "GHC 65",
     status: "Pending",
     date: new Date(),
   },
@@ -90,7 +90,7 @@ const sampleOrders: Order[] = [
     phone: "024 889 1023",
     location: "Unity Hall",
     item: "Jollof",
-    amount: "₵ 40",
+    amount: "GHC 40",
     status: "Packaged",
     date: new Date(new Date().setDate(new Date().getDate() - 1)),
   },
@@ -100,7 +100,7 @@ const sampleOrders: Order[] = [
     phone: "020 554 7789",
     location: "Ayeduase",
     item: "Pizza",
-    amount: "₵ 90",
+    amount: "GHC 90",
     status: "In Transit",
     date: new Date(new Date().setDate(new Date().getDate() - 3)),
   },
@@ -110,7 +110,7 @@ const sampleOrders: Order[] = [
     phone: "054 123 4567",
     location: "Katanga",
     item: "Burger",
-    amount: "₵ 55",
+    amount: "GHC 55",
     status: "Completed",
     date: new Date(new Date().setDate(new Date().getDate() - 2)),
   },
@@ -120,7 +120,7 @@ const sampleOrders: Order[] = [
     phone: "027 890 1234",
     location: "Republic Hall",
     item: "Fried Rice",
-    amount: "₵ 75",
+    amount: "GHC 75",
     status: "Pickup",
     date: new Date(new Date().setDate(new Date().getDate() - 8)),
   },
@@ -130,7 +130,7 @@ const sampleOrders: Order[] = [
     phone: "023 456 7890",
     location: "GTUC",
     item: "Chicken & Chips",
-    amount: "₵ 60",
+    amount: "GHC 60",
     status: "Pending",
     date: new Date('2024-11-15'),
   },
@@ -140,7 +140,7 @@ const sampleOrders: Order[] = [
     phone: "023 456 7890",
     location: "GTUC",
     item: "Chicken & Chips",
-    amount: "₵ 60",
+    amount: "GHC 60",
     status: "Pending",
     date: new Date('2024-11-15'),
   },
@@ -150,7 +150,7 @@ const sampleOrders: Order[] = [
     phone: "023 456 7890",
     location: "GTUC",
     item: "Chicken & Chips",
-    amount: "₵ 60",
+    amount: "GHC 60",
     status: "Completed",
     date: new Date('2024-11-17'),
   },
@@ -182,9 +182,9 @@ function App({ goToAddOrders }: AppProps) {
     if (!value) return '₵0.00';
     const cleaned = value.trim();
     if (!cleaned) return '₵0.00';
-    if (cleaned.includes('₵') || cleaned.toUpperCase().includes('₵')) return cleaned;
+    if (cleaned.includes('GHC') || cleaned.toUpperCase().includes('GHC')) return cleaned;
     const parsed = parseFloat(cleaned.replace(/[^\d.]/g, ''));
-    if (Number.isFinite(parsed)) return `₵${parsed.toFixed(2)}`;
+    if (Number.isFinite(parsed)) return `GHC${parsed.toFixed(2)}`;
     return cleaned;
   };
 

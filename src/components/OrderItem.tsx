@@ -98,13 +98,13 @@ const OrderItem: React.FC<{
     
     parts.forEach(part => {
       // Check for pattern like "2 Shawarmas (₵60.00)" 
-      const patternWithPrice = /^(\d+)\s+([^(]+?)\s*\(₵(\d+(?:\.\d{2})?)\)$/;
+      const patternWithPrice = /^(\d+)\s+([^(]+?)\s*\(GHC(\d+(?:\.\d{2})?)\)$/;
       const matchWithPrice = part.match(patternWithPrice);
       
       if (matchWithPrice) {
         const quantity = parseInt(matchWithPrice[1]);
         const name = matchWithPrice[2].trim();
-        const price = `₵${matchWithPrice[3]}`;
+        const price = `GHC${matchWithPrice[3]}`;
         items.push({ name, quantity, price });
       } else {
         // Check for pattern like "2 Shawarmas" (no price)

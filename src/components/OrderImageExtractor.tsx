@@ -46,7 +46,7 @@ function UploadOrders() {
         /(hall|hostel|room|block|campus)/i.test(l)
       ) || ''
 
-    const amountMatch = text.match(/(?:GH₵|₵|\₵|GHS)?\s?\d+(?:,\d{3})*(?:\.\d{2})?/i);
+    const amountMatch = text.match(/(?:GH₵|GHC|\GHC|GHS)?\s?\d+(?:,\d{3})*(?:\.\d{2})?/i);
 
     const product =
       lines.find(

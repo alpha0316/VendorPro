@@ -72,7 +72,7 @@ const parseProductLine = (line: string): { name: string; qty: number; price: str
   const matched = MENU_PRODUCTS.find(p =>
     p.keywords.some(k => name.toLowerCase().includes(k.toLowerCase()))
   );
-  const price = matched ? `₵${(matched.price * qty).toFixed(2)}` : '';
+  const price = matched ? `GHC${(matched.price * qty).toFixed(2)}` : '';
   return { name, qty, price };
 };
 
@@ -89,7 +89,7 @@ const normalizeItemsForUI = (product: string, amount: string) => {
     .join(', ');
 
   const parsedAmount = parseFloat(amount);
-  const totalPrice = Number.isFinite(parsedAmount) ? `₵${parsedAmount.toFixed(2)}` : '₵0.00';
+  const totalPrice = Number.isFinite(parsedAmount) ? `GHC${parsedAmount.toFixed(2)}` : '₵0.00';
 
   return { itemString: itemString || 'Unknown product', totalPrice };
 };

@@ -260,13 +260,13 @@ const RevenueDashboard = () => {
                     {statusConfig.find(s => s.key === entry.dataKey)?.label || entry.dataKey}
                   </span>
                 </div>
-                <span className="font-medium text-gray-800">₵ {entry.value?.toLocaleString()}</span>
+                <span className="font-medium text-gray-800">GHC {entry.value?.toLocaleString()}</span>
               </div>
             ))}
             <div className="border-t pt-1 mt-1">
               <div className="flex items-center justify-between font-bold">
                 <span className="text-gray-800">Total</span>
-                <span className="text-gray-800">₵ {total.toLocaleString()}</span>
+                <span className="text-gray-800">GHC {total.toLocaleString()}</span>
               </div>
             </div>
           </div>
@@ -364,7 +364,7 @@ const RevenueDashboard = () => {
               axisLine={false} 
               tickLine={false} 
               tick={{ fill: '#9ca3af', fontSize: 12 }}
-              tickFormatter={(value) => `₵${value}`}
+              tickFormatter={(value) => `GHC${value}`}
               domain={[0, yAxisMax]}
               ticks={yAxisTicks}
             />

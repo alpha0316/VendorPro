@@ -54,7 +54,7 @@ function App({ goToAddOrders }: AppProps) {
                   </div>
                 </div>
                 <div className="flex flex-col justify-start items-start gap-2">
-                  <div className="justify-start text-black/80 text-2xl font-semibold">₵ 8,201.00</div>
+                  <div className="justify-start text-black/80 text-2xl font-semibold">GHC 8,201.00</div>
                   <div className="justify-start"><span className="text-black/50 text-sm font-normal ">Total Revenue since </span><span className="text-black/80 text-sm font-normal ">5th Dec 25</span></div>
                 </div>
               </div>
@@ -127,7 +127,7 @@ function App({ goToAddOrders }: AppProps) {
                   </div>
                 </div>
                 <div className="flex flex-col justify-start items-start gap-2">
-                  <div className="justify-start text-black/80 text-2xl font-semibold ">₵ 80.00</div>
+                  <div className="justify-start text-black/80 text-2xl font-semibold ">GHC 80.00</div>
                   <div className="justify-start text-black/80 text-sm font-normal">1 Order</div>
                 </div>
               </div>

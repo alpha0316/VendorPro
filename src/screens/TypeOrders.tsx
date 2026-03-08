@@ -225,8 +225,8 @@ function App({ goToAddOrders }: AppProps) {
 
   const [selectedOrders, setSelectedOrders] = useState<string[]>([]);
   const [orders, setOrders] = useState<Order[]>([
-    { id: '#011', name: 'Prince', phone: '055 414 4611', hall: 'Suncity', item: 'Jollof', price: '₵ 60' },
-    { id: '#014', name: 'Kofi Asante', phone: '055 321 7654', hall: 'Hall 2', item: 'Banku', price: '₵ 40' },
+    { id: '#011', name: 'Prince', phone: '055 414 4611', hall: 'Suncity', item: 'Jollof', price: 'GHC 60' },
+    { id: '#014', name: 'Kofi Asante', phone: '055 321 7654', hall: 'Hall 2', item: 'Banku', price: 'GHC 40' },
   ]);
 
   // Modal state
@@ -314,7 +314,7 @@ function App({ goToAddOrders }: AppProps) {
       phone: newOrder.phone,
       hall: newOrder.location,
       item: newOrder.item,
-      price: `₵ ${newOrder.price}`
+      price: `GHC ${newOrder.price}`
     };
 
     setOrders(prev => [...prev, orderToAdd]);

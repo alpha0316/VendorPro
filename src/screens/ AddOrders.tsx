@@ -65,7 +65,7 @@ function App({ goToOrderImages = () => { }, goToAddOrders = () => { }, goToCopyA
                   <img src="/logo.png" alt="Logo" className="w-1.5 h-2.5" />
                 </div>
                 <div className="w-1 h-1 bg-zinc-300 rounded-full" />
-                <p className="justify-start text-Grey-Scale-Grey-Scale-600 text-xs font-normal">₵ 65</p>
+                <p className="justify-start text-Grey-Scale-Grey-Scale-600 text-xs font-normal">GHC 65</p>
               </div>
 
               <div className="flex justify-center items-center gap-2" >
@@ -88,7 +88,7 @@ function App({ goToOrderImages = () => { }, goToAddOrders = () => { }, goToCopyA
                   <img src="/logo.png" alt="Logo" className="w-1.5 h-2.5" />
                 </div>
                 <div className="w-1 h-1 bg-zinc-300 rounded-full" />
-                <p className="justify-start text-Grey-Scale-Grey-Scale-600 text-xs font-normal">₵ 65</p>
+                <p className="justify-start text-Grey-Scale-Grey-Scale-600 text-xs font-normal">GHC 65</p>
               </div>
 
               <div className="flex justify-center items-center gap-2" >
@@ -111,7 +111,7 @@ function App({ goToOrderImages = () => { }, goToAddOrders = () => { }, goToCopyA
                   <img src="/logo.png" alt="Logo" className="w-1.5 h-2.5" />
                 </div>
                 <div className="w-1 h-1 bg-zinc-300 rounded-full" />
-                <p className="justify-start text-Grey-Scale-Grey-Scale-600 text-xs font-normal">₵ 65</p>
+                <p className="justify-start text-Grey-Scale-Grey-Scale-600 text-xs font-normal">GHC 65</p>
               </div>
 
               <div className="flex justify-center items-center gap-2" >
