@@ -98,7 +98,7 @@ function App({ goToOrderImages = () => { }, goToAddOrders = () => { }, goToCopyA
               </div>
 
             </figure>
-            <figure className="relative sm:right-50 right-18 sm:bottom-18 bottom-68 rotate-[-15.79deg] px-4 py-6 bg-gray-100 rounded-2xl  outline-[3px] outline-offset-[-3px] outline-white inline-flex flex-col justify-start items-center gap-3.5">
+            <figure className="relative sm:right-58 right-18 sm:bottom-18 bottom-68 rotate-[-15.79deg] px-4 py-6 bg-gray-100 rounded-2xl  outline-[3px] outline-offset-[-3px] outline-white inline-flex flex-col justify-start items-center gap-3.5">
               <div className="w-16 h-16 relative bg-[#F6CCCC] rounded-[100px] overflow-hidden">
                 <div className="w-24 left-[-17.12px] top-[10.20px] absolute text-center justify-start text-black text-5xl font-bold"></div>
               </div>
