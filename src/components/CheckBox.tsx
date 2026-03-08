@@ -1,10 +1,16 @@
-import React, { useState } from "react";
+import { useState } from "react";
+
+interface CheckCircleIconProps {
+  defaultChecked?: boolean;
+  size?: number;
+  onChange?: (checked: boolean) => void;
+}
 
 const CheckCircleIcon = ({
   defaultChecked = false,
   size = 16,
   onChange,
-}) => {
+}: CheckCircleIconProps) => {
   const [checked, setChecked] = useState(defaultChecked);
 
   const toggle = () => {
