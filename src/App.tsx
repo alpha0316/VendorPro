@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import Home from './screens/Home';
 import OrderHistory from './screens/OrderHistory';
 import YourRiders from './screens/YourRiders';
@@ -21,52 +21,61 @@ interface ExtractedOrder {
 const App = () => {
   const [activeTab, setActiveTab] = useState('Home');
   const [preparedOrders, setPreparedOrders] = useState<ExtractedOrder[]>([]);
+  const previousTabRef = useRef<string>('Home');
+
+  const switchTab = (tab: string) => {
+    previousTabRef.current = activeTab;
+    setActiveTab(tab);
+  };
 
   const renderTab = () => {
     switch (activeTab) {
       case 'Home':
         return (
           <Home
-            goToOrderImages={() => setActiveTab('OrderImages')}
-            goToCopyAndPaste={() => setActiveTab('CopyAndPaste')}
-            goToTypeOrders={() => setActiveTab('TypeOrders')}
+            goToOrderImages={() => switchTab('OrderImages')}
+            goToCopyAndPaste={() => switchTab('CopyAndPaste')}
+            goToTypeOrders={() => switchTab('TypeOrders')}
           />
         );
       case 'CopyAndPaste':
         return (
           <CopyAndPaste
-            goToHome={() => setActiveTab('Home')}
-            goToPreparedList={() => setActiveTab('PreparedList')}
+            goToHome={() => switchTab('Home')}
+            goToPreparedList={(orders) => {
+              setPreparedOrders(orders);
+              switchTab('PreparedList');
+            }}
           />
         );
       case 'OrderHistory':
-        return <OrderHistory goToHome={() => setActiveTab('Home')} />;
+        return <OrderHistory goToHome={() => switchTab('Home')} />;
       case 'YourRiders':
-        return <YourRiders goToHome={() => setActiveTab('Home')} />;
+        return <YourRiders goToHome={() => switchTab('Home')} />;
       case 'Analytics':
-        return <Analytics goToHome={() => setActiveTab('Home')} />;
+        return <Analytics goToHome={() => switchTab('Home')} />;
       case 'OrderImages':
         return (
           <OrderImages
             goToPreparedList={(orders) => {
               setPreparedOrders(orders);
-              setActiveTab('PreparedList');
+              switchTab('PreparedList');
             }}
           />
         );
       case 'TypeOrders':
         return (
           <TypeOrders
-            goToPreparedList={() => setActiveTab('PreparedList')}
-            goToHome={() => setActiveTab('Home')}
+            goToPreparedList={() => switchTab('PreparedList')}
+            goToHome={() => switchTab('Home')}
           />
         );
       case 'PreparedList':
         return (
           <PreparedList
             orders={preparedOrders}
-            goBackToOrderImages={() => setActiveTab('OrderImages')}
-            goToHome={() => setActiveTab('Home')}
+            goBack={() => switchTab(previousTabRef.current)}
+            goToHome={() => switchTab('Home')}
           />
         );
       default:
@@ -161,7 +170,7 @@ const App = () => {
           return (
             <button
               key={key}
-              onClick={() => setActiveTab(key)}
+              onClick={() => switchTab(key)}
               className="flex flex-col items-center justify-center gap-1 flex-1 sm:flex-none px-3 sm:px-4 py-1.5 rounded-[28px] transition-all active:scale-95"
               style={{
                 background: active ? 'rgba(255,255,255,0.15)' : 'transparent',

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import CheckCircleIcon from '../components/CheckBox';
+import DynamicLogo from '../components/DynamicLogo';
 
 interface ExtractedOrder {
   image?: File;
@@ -32,7 +33,7 @@ interface Rider {
 
 type PreparedListProps = {
   orders: ExtractedOrder[];
-  goBackToOrderImages: () => void;
+  goBack: () => void;
   goToHome: () => void;
 };
 
@@ -351,7 +352,7 @@ const StickerCard: React.FC<{
 
 const PreparedList: React.FC<PreparedListProps> = ({
   orders: incomingOrders,
-  goBackToOrderImages,
+  goBack,
   goToHome
 }) => {
   const [orders, setOrders] = useState<Order[]>([]);
@@ -463,11 +464,7 @@ const PreparedList: React.FC<PreparedListProps> = ({
       <main className="flex flex-col items-center w-full min-h-screen px-4 sm:px-6 md:px-8">
         {/* HEADER */}
         <div className="flex items-center justify-between w-full max-w-7xl mx-auto mt-4 sm:mt-6 md:mt-8">
-          <div onClick={goToHome} className="flex items-center cursor-pointer">
-            <img src="/logo.png" alt="Logo" className="h-4 sm:h-5 w-2.5 sm:w-3" />
-            <span className="text-red-600 text-base sm:text-lg font-bold">B</span>
-            <span className="text-black/50 text-base sm:text-lg font-bold">ites.</span>
-          </div>
+          <DynamicLogo onClick={goToHome} />
           <div className="h-5 sm:h-6 px-1 sm:px-1.5 py-1.5 sm:py-2.5 bg-orange-400 rounded-[50px] flex items-center justify-center">
             <div className="text-center text-white text-xs">R 👩🏽‍🍳</div>
           </div>
@@ -477,14 +474,7 @@ const PreparedList: React.FC<PreparedListProps> = ({
           {/* NAV */}
           <nav className="flex w-full items-center justify-between">
             <div className="flex gap-2 items-center">
-              <button
-                onClick={goBackToOrderImages}
-                className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 bg-[#F6F6F6] rounded-full hover:bg-gray-200 transition-colors"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                  <path d="M10 13L5 8L10 3" stroke="black" strokeOpacity="0.6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </button>
+             
               <p className="text-black text-base sm:text-lg font-bold">
                 Prepared Order List
                 <span className="text-black/50 font-normal ml-1">({displayOrders.length})</span>
@@ -599,7 +589,7 @@ const PreparedList: React.FC<PreparedListProps> = ({
                 No prepared orders yet.<br />
                 Go back to extract orders from images.
               </p>
-              <button onClick={goBackToOrderImages} className="mt-4 text-red-600 text-sm font-medium hover:underline">
+              <button onClick={goBack} className="mt-4 text-red-600 text-sm font-medium hover:underline">
                 Go to Order Images
               </button>
             </div>

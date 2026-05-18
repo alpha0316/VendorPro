@@ -2,6 +2,7 @@ import './../App.css'
 import { useState } from 'react';
 import PrimaryButton from '../components/PrimaryButton';
 import { useNavigate } from 'react-router-dom';
+import DynamicLogo from '../components/DynamicLogo';
 
 interface AppProps {
   goToPreparedList: () => void;
@@ -596,13 +597,8 @@ function App({ goToHome }: AppProps) {
       <main className="flex flex-col items-center w-full min-h-screen px-4 sm:px-6 md:px-8">
         {/* HEADER */}
         <div className="flex items-center justify-between w-full max-w-7xl mx-auto mt-4 sm:mt-6 md:mt-8">
-          <div
-            onClick={goToHome}
-            className="hidden sm:flex items-center cursor-pointer"
-          >
-            <img src="/logo.png" alt="Logo" className="h-4 sm:h-5 w-2.5 sm:w-3" />
-            <span className="text-red-600 text-base sm:text-lg font-bold">B</span>
-            <span className="text-black/50 text-base sm:text-lg font-bold">ites.</span>
+          <div className="hidden sm:flex">
+            <DynamicLogo onClick={goToHome} />
           </div>
 
           <div className="h-5 sm:h-6 px-1 sm:px-1.5 py-1.5 sm:py-2.5 bg-orange-400 rounded-[50px] flex items-center justify-center ml-auto sm:ml-0">
