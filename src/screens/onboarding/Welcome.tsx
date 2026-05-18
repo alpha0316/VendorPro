@@ -308,7 +308,7 @@ const Welcome = () => {
 
       {/* MOBILE LAYOUT */}
       <div className="flex min-h-screen flex-col bg-[#fdfdfd] sm:hidden overflow-hidden">
-        <div className="flex flex-col items-center pt-28 mb-12">
+        <div className="flex flex-col items-center pt-14 mb-6">
           <img src="/logo.png" alt="Logo" className="h-10 w-auto" />
           <div className="mt-8 px-8 text-center">
             <p className="text-xl font-medium text-black/40">Welcome To</p>
@@ -318,7 +318,7 @@ const Welcome = () => {
 
         <FeatureCarousel variant="mobile" />
 
-        <div className="mt-auto p-3 pb-10">
+        <div className="mt-auto p-3 pb-8">
           <div className="bg-white rounded-4xl p-6 shadow-[0_10px_30px_rgba(0,0,0,0.05)] border border-black/5 flex flex-col gap-6">
             <h2 className="text-center text-xl font-semibold px-2">Turn Messages into <br /><span className="text-black/50">Ready-to-Dispatch Orders</span></h2>
             <div className="flex flex-col gap-2">
