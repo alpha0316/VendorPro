@@ -15,7 +15,6 @@ const FolderCover = ({
       {/* Background blur layer */}
       <foreignObject x="-39.5892" y="-40.0843" width="158.178" height="122.169">
         <div
-          xmlns="http://www.w3.org/1999/xhtml"
           style={{
             backdropFilter: 'blur(20.04px)',
             WebkitBackdropFilter: 'blur(20.04px)',
