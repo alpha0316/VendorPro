@@ -1,5 +1,5 @@
 <svg width="39" height="43" viewBox="0 0 39 43" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g clip-path="url(#clip0_30517_10229)">
+<g clip-path="url(#clip0_30539_10326)">
 <rect x="5.20508" width="34" height="38" rx="4" transform="rotate(7.8727 5.20508 0)" fill="white"/>
 <rect x="6.91211" y="2.25513" width="12" height="10" rx="2" transform="rotate(7.8727 6.91211 2.25513)" fill="#F4F4F4"/>
 <rect x="5.26855" y="14.1421" width="22.6375" height="3" rx="1.5" transform="rotate(7.8727 5.26855 14.1421)" fill="#F4F4F4"/>
@@ -9,7 +9,7 @@
 </g>
 <rect x="5.63188" y="0.563774" width="33" height="37" rx="3.5" transform="rotate(7.8727 5.63188 0.563774)" stroke="#E76232" stroke-opacity="0.2"/>
 <defs>
-<clipPath id="clip0_30517_10229">
+<clipPath id="clip0_30539_10326">
 <rect x="5.20508" width="34" height="38" rx="4" transform="rotate(7.8727 5.20508 0)" fill="white"/>
 </clipPath>
 </defs>
