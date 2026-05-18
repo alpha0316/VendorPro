@@ -3,12 +3,12 @@ import './../App.css'
 import RevenueChart from '../components/ExpenseGraph';
 
 interface AppProps {
-  goToAddOrders: () => void;
+  goToHome: () => void;
 }
 
 
 
-function App({ goToAddOrders }: AppProps) {
+function App({ goToHome }: AppProps) {
 
 
   return (
@@ -17,7 +17,7 @@ function App({ goToAddOrders }: AppProps) {
         <section className='flex flex-col w-full '>
           <div className='flex items-center justify-between w-full px-3 sm:px-6 md:px-8 mt-4 sm:mt-6 md:mt-8'>
             <div
-              onClick={goToAddOrders}
+              onClick={goToHome}
               className="flex items-center cursor-pointer">
               <img src="/logo.png" alt="Logo" className="h-4 sm:h-5 w-2.5 sm:w-3" />
               <span className="text-red-600 text-base sm:text-lg font-bold p-0">B</span>

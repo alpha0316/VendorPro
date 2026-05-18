@@ -16,7 +16,7 @@ function PrimaryButton({ title, onClick }: PrimaryButtonProps) {
   );
 }
 
-function App({ goToOrderImages = () => { }, goToAddOrders = () => { }, goToCopyAndPaste = () => { }, goToTypeOrders = () => { } }) {
+function App({ goToOrderImages = () => { }, goToHome = () => { }, goToCopyAndPaste = () => { }, goToTypeOrders = () => { } }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => setIsModalOpen(true);
@@ -33,7 +33,7 @@ function App({ goToOrderImages = () => { }, goToAddOrders = () => { }, goToCopyA
 
         <div className='flex items-center justify-between w-full px-4 sm:px-6 md:px-8 lg:w-360 lg:mx-auto mt-4 sm:mt-6 md:mt-8'>
           <div
-            onClick={goToAddOrders}
+            onClick={goToHome}
             className="flex items-center cursor-pointer"
           >
             <img

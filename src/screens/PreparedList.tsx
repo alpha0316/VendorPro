@@ -33,7 +33,7 @@ interface Rider {
 type PreparedListProps = {
   orders: ExtractedOrder[];
   goBackToOrderImages: () => void;
-  goToAddOrders: () => void;
+  goToHome: () => void;
 };
 
 type StorageLike = {
@@ -352,7 +352,7 @@ const StickerCard: React.FC<{
 const PreparedList: React.FC<PreparedListProps> = ({
   orders: incomingOrders,
   goBackToOrderImages,
-  goToAddOrders
+  goToHome
 }) => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [savedOrders, setSavedOrders] = useState<Order[]>([]);
@@ -463,7 +463,7 @@ const PreparedList: React.FC<PreparedListProps> = ({
       <main className="flex flex-col items-center w-full min-h-screen px-4 sm:px-6 md:px-8">
         {/* HEADER */}
         <div className="flex items-center justify-between w-full max-w-7xl mx-auto mt-4 sm:mt-6 md:mt-8">
-          <div onClick={goToAddOrders} className="flex items-center cursor-pointer">
+          <div onClick={goToHome} className="flex items-center cursor-pointer">
             <img src="/logo.png" alt="Logo" className="h-4 sm:h-5 w-2.5 sm:w-3" />
             <span className="text-red-600 text-base sm:text-lg font-bold">B</span>
             <span className="text-black/50 text-base sm:text-lg font-bold">ites.</span>

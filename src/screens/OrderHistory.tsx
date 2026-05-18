@@ -2,7 +2,7 @@ import './../App.css'
 import React from 'react'
 
 interface AppProps {
-  goToAddOrders: () => void;
+  goToHome: () => void;
 }
 
 type OrderStatus = 'Pending' | 'Packaged' | 'In Transit' | 'Completed' | 'Pickup';
@@ -156,7 +156,7 @@ const sampleOrders: Order[] = [
   },
 ];
 
-function App({ goToAddOrders }: AppProps) {
+function App({ goToHome }: AppProps) {
 
   const [] = React.useState(false);
   const [] = React.useState<Record<string, boolean>>({});
@@ -586,7 +586,7 @@ function App({ goToAddOrders }: AppProps) {
 
         <div className='flex items-center justify-between w-full px-4 sm:px-6 md:px-8 lg:w-360 lg:mx-auto mt-4 sm:mt-6 md:mt-8'>
           <div
-            onClick={goToAddOrders}
+            onClick={goToHome}
             className="flex items-center cursor-pointer"
           >
             <img

@@ -2,17 +2,17 @@ import './../App.css'
 
 interface AppProps {
   goToPreparedList: () => void;
-  goToAddOrders: () => void;
+  goToHome: () => void;
 }
 
-function App({ goToAddOrders }: AppProps) {
+function App({ goToHome }: AppProps) {
   return (
     <main className="flex flex-col items-center w-full min-h-screen px-4 sm:px-6 md:px-8">
 
       {/* HEADER */}
       <div className="flex items-center justify-between w-full max-w-7xl mx-auto mt-4 sm:mt-6 md:mt-8">
         <div
-          onClick={goToAddOrders}
+          onClick={goToHome}
           className="flex items-center cursor-pointer"
         >
           <img src="/logo.png" alt="Logo" className="h-4 sm:h-5 w-2.5 sm:w-3" />
@@ -31,9 +31,9 @@ function App({ goToAddOrders }: AppProps) {
         mt-8
         sm:min-h-[calc(100vh-80px)] sm:justify-start sm:-mt-24
       ">
-        <div className="flex flex-col gap-3.5">
+        <div className="flex flex-col gap-3.5 mt-24">
           <p className="text-black text-2xl sm:text-3xl font-bold text-left leading-snug">
-            Paste Your Orders —<br className="hidden sm:block" /> We'll Handle the Rest ✨
+            Paste Your Orders —<br className="hidden sm:block" /> 
           </p>
           <p className="text-black/50 text-sm font-normal text-left">
             Simply paste your raw order messages from WhatsApp, Telegram, or anywhere else.

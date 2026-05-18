@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import AddOrders from './screens/ AddOrders';
+import Home from './screens/Home';
 import OrderHistory from './screens/OrderHistory';
 import YourRiders from './screens/YourRiders';
 import Analytics from './screens/Analytics';
@@ -19,14 +19,14 @@ interface ExtractedOrder {
 }
 
 const App = () => {
-  const [activeTab, setActiveTab] = useState('AddOrders');
+  const [activeTab, setActiveTab] = useState('Home');
   const [preparedOrders, setPreparedOrders] = useState<ExtractedOrder[]>([]);
 
   const renderTab = () => {
     switch (activeTab) {
-      case 'AddOrders':
+      case 'Home':
         return (
-          <AddOrders
+          <Home
             goToOrderImages={() => setActiveTab('OrderImages')}
             goToCopyAndPaste={() => setActiveTab('CopyAndPaste')}
             goToTypeOrders={() => setActiveTab('TypeOrders')}
@@ -35,16 +35,16 @@ const App = () => {
       case 'CopyAndPaste':
         return (
           <CopyAndPaste
-            goToAddOrders={() => setActiveTab('AddOrders')}
+            goToHome={() => setActiveTab('Home')}
             goToPreparedList={() => setActiveTab('PreparedList')}
           />
         );
       case 'OrderHistory':
-        return <OrderHistory goToAddOrders={() => setActiveTab('AddOrders')} />;
+        return <OrderHistory goToHome={() => setActiveTab('Home')} />;
       case 'YourRiders':
-        return <YourRiders goToAddOrders={() => setActiveTab('AddOrders')} />;
+        return <YourRiders goToHome={() => setActiveTab('Home')} />;
       case 'Analytics':
-        return <Analytics goToAddOrders={() => setActiveTab('AddOrders')} />;
+        return <Analytics goToHome={() => setActiveTab('Home')} />;
       case 'OrderImages':
         return (
           <OrderImages
@@ -58,7 +58,7 @@ const App = () => {
         return (
           <TypeOrders
             goToPreparedList={() => setActiveTab('PreparedList')}
-            goToAddOrders={() => setActiveTab('AddOrders')}
+            goToHome={() => setActiveTab('Home')}
           />
         );
       case 'PreparedList':
@@ -66,17 +66,17 @@ const App = () => {
           <PreparedList
             orders={preparedOrders}
             goBackToOrderImages={() => setActiveTab('OrderImages')}
-            goToAddOrders={() => setActiveTab('AddOrders')}
+            goToHome={() => setActiveTab('Home')}
           />
         );
       default:
-        return <AddOrders />;
+        return <Home />;
     }
   };
 
   const NAV_ITEMS = [
     {
-      key: 'AddOrders',
+      key: 'Home',
       label: 'Home',
       icon: (active: boolean) => (
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none">

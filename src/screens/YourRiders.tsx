@@ -2,7 +2,7 @@ import './../App.css'
 import { useState } from 'react';
 
 interface AppProps {
-  goToAddOrders: () => void;
+  goToHome: () => void;
 }
 
 interface Rider {
@@ -94,7 +94,7 @@ const SAMPLE_RIDERS: Rider[] = [
   },
 ];
 
-function App({ goToAddOrders }: AppProps) {
+function App({ goToHome }: AppProps) {
   const [riders] = useState<Rider[]>(SAMPLE_RIDERS);
   const [showAddModal, setShowAddModal] = useState(false);
 
@@ -111,7 +111,7 @@ function App({ goToAddOrders }: AppProps) {
         {/* Header */}
         <div className='flex items-center justify-between w-full max-w-7xl mx-auto mt-4 sm:mt-6 md:mt-8'>
           <div
-            onClick={goToAddOrders}
+            onClick={goToHome}
             className="flex items-center cursor-pointer"
           >
             <img

@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 interface AppProps {
   goToPreparedList: () => void;
-  goToAddOrders: () => void;
+  goToHome: () => void;
 }
 
 interface Order {
@@ -464,7 +464,7 @@ const AddOrderBottomSheet: React.FC<{
   );
 };
 
-function App({ goToAddOrders }: AppProps) {
+function App({ goToHome }: AppProps) {
   const navigate = useNavigate();
 
   const [selectedOrders, setSelectedOrders] = useState<string[]>([]);
@@ -597,7 +597,7 @@ function App({ goToAddOrders }: AppProps) {
         {/* HEADER */}
         <div className="flex items-center justify-between w-full max-w-7xl mx-auto mt-4 sm:mt-6 md:mt-8">
           <div
-            onClick={goToAddOrders}
+            onClick={goToHome}
             className="hidden sm:flex items-center cursor-pointer"
           >
             <img src="/logo.png" alt="Logo" className="h-4 sm:h-5 w-2.5 sm:w-3" />

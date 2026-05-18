@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useOnboarding } from '../../contexts/OnboardingContext';
 
@@ -6,18 +5,10 @@ const BUSINESS_TYPES = ['Retail', 'Wholesale', 'Service'];
 
 const BusinessSetup = () => {
   const navigate = useNavigate();
-  const { data, updateData, submit, isSubmitting } = useOnboarding();
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const { data, updateData } = useOnboarding();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     updateData({ [e.target.name]: e.target.value });
-    if (errors[e.target.name]) {
-      setErrors(prev => {
-        const next = { ...prev };
-        delete next[e.target.name];
-        return next;
-      });
-    }
   };
 
   const handleUseCurrentLocation = () => {
@@ -35,32 +26,41 @@ const BusinessSetup = () => {
     }
   };
 
-  const validate = () => {
-    const e: Record<string, string> = {};
-    if (!data.businessName.trim()) e.businessName = 'Business name is required';
-    if (!data.phoneNumber.trim()) e.phoneNumber = 'Phone number is required';
-    setErrors(e);
-    return Object.keys(e).length === 0;
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleContinue = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!validate()) return;
-    await submit();
     navigate('/app');
   };
 
-  const inputStyle = (field: string): React.CSSProperties => ({
+  const inputStyle: React.CSSProperties = {
     padding: 'clamp(0.5rem, 2vw, 0.625rem) clamp(0.75rem, 2vw, 0.75rem)',
     fontSize: 'clamp(0.875rem, 2vw, 0.875rem)',
     borderRadius: 12,
-    border: errors[field] ? '1.5px solid #ef4444' : '1px solid #ccc',
+    border: '1px solid #ccc',
     width: '100%',
     boxSizing: 'border-box',
-  });
+  };
 
   return (
-  <div className=" sm:px-0  px-0 py-4 flex justify-center w-full">
+  <div className="min-h-screen flex flex-col items-center">
+    {/* Logo + User Bar — full width, top of page */}
+    <div className="flex items-center justify-between w-full px-4 sm:px-6 md:px-8 mt-4 sm:mt-6 md:mt-8">
+      <div className="flex items-center cursor-pointer">
+        <img
+          src="/logo.png"
+          alt="Logo"
+          className="h-4 sm:h-5 w-2.5 sm:w-3"
+        />
+        <span className="text-red-600 text-base sm:text-lg font-bold">B</span>
+        <span className="text-black/50 text-base sm:text-lg font-bold">ites.</span>
+      </div>
+
+      <div className="h-5 sm:h-6 px-1 sm:px-1.5 py-1.5 sm:py-2.5 bg-orange-400 rounded-[50px] flex items-center justify-center">
+        <div className="text-center text-white text-xs">R 👩🏽‍🍳</div>
+      </div>
+    </div>
+
+    {/* Card Container */}
+    <div className="px-4 py-4 flex justify-center w-full">
     <div
       className="
         w-full max-w-120
@@ -74,6 +74,7 @@ const BusinessSetup = () => {
         sm:shadow-[0px_1px_4px_0px_rgba(12,12,13,0.05),0px_1px_4px_0px_rgba(12,12,13,0.10)]
       "
     >
+
       {/* Header */}
       <section className="flex flex-col gap-4 items-center">
         <div className="text-center text-black text-3xl font-medium font-['SF_Pro_Text']">
@@ -85,7 +86,7 @@ const BusinessSetup = () => {
       </section>
 
       {/* Form */}
-      <form onSubmit={handleSubmit} className="flex flex-col gap-2 w-full">
+      <form onSubmit={handleContinue} className="flex flex-col gap-2 w-full">
         {/* Business Name */}
         <div className="my-1 flex flex-col gap-1 items-start w-full">
           <label className="text-sm font-medium text-[#333]">
@@ -97,13 +98,8 @@ const BusinessSetup = () => {
             placeholder='eg. "Pice"'
             value={data.businessName}
             onChange={handleChange}
-            style={inputStyle('businessName')}
+            style={inputStyle}
           />
-          {errors.businessName && (
-            <p className="text-red-400 text-xs mt-0.5 ml-1">
-              {errors.businessName}
-            </p>
-          )}
         </div>
 
         {/* Phone Number */}
@@ -117,13 +113,8 @@ const BusinessSetup = () => {
             placeholder="0"
             value={data.phoneNumber}
             onChange={handleChange}
-            style={inputStyle('phoneNumber')}
+            style={inputStyle}
           />
-          {errors.phoneNumber && (
-            <p className="text-red-400 text-xs mt-0.5 ml-1">
-              {errors.phoneNumber}
-            </p>
-          )}
         </div>
 
         {/* Email */}
@@ -137,7 +128,7 @@ const BusinessSetup = () => {
             placeholder="company@gmail.com"
             value={data.email}
             onChange={handleChange}
-            style={{ ...inputStyle(''), border: '1px solid #ccc' }}
+            style={inputStyle}
           />
         </div>
 
@@ -175,7 +166,7 @@ const BusinessSetup = () => {
             placeholder="Search Location, Hostel, Landmark"
             value={data.location}
             onChange={handleChange}
-            style={{ ...inputStyle(''), border: '1px solid #ccc' }}
+            style={inputStyle}
           />
         </div>
 
@@ -205,7 +196,6 @@ const BusinessSetup = () => {
         {/* Continue Button */}
         <button
           type="submit"
-          disabled={isSubmitting}
           className="
             w-full h-12.5 mt-4
             bg-[#FF9933] text-white border-none
@@ -213,14 +203,14 @@ const BusinessSetup = () => {
             cursor-pointer transition-all
             hover:-translate-y-0.5
             hover:shadow-lg hover:shadow-orange-200
-            disabled:opacity-60 disabled:cursor-not-allowed
           "
         >
-          {isSubmitting ? 'Saving...' : 'Continue'}
+          Continue
         </button>
       </form>
     </div>
   </div>
+</div>
 );
 };
 

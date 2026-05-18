@@ -332,7 +332,7 @@ const Welcome = () => {
 
       {/* DESKTOP LAYOUT */}
       <div className="hidden sm:flex flex-col items-center justify-center min-h-screen bg-[#fdfdfd] p-6">
-        <div className="w-full max-w-125 bg-white rounded-[40px] shadow-2xl p-10 flex flex-col items-center gap-8 border border-black/5">
+        <div className="w-full max-w-125 bg-white rounded-[40px] shadow-1xl p-10 flex flex-col items-center gap-8 border border-black/5">
           <img src="/logo.png" alt="Logo" className="w-10 h-auto" />
           <div className="text-center">
             <h1 className="text-3xl font-bold">Welcome To Vendor Pro</h1>
